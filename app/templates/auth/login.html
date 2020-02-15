@@ -1,0 +1,13 @@
+{% extends "templates/flash.html" %}  <!--继承闪现模板-->
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}登陆{% endblock %}
+{% block content %}
+{{super()}}
+{{wtf.quick_form(form)}}           <!--渲染表单-->
+<div class="btn btn-info" style="float:left">
+    <a href="{{url_for('auth.register')}}">注册</a>
+</div>
+<div class="btn btn-danger" style="float:right">
+    <a href="{{url_for('auth.forget_password')}}">忘记密码</a>
+</div>
+{% endblock %}

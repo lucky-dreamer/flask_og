@@ -1,0 +1,8 @@
+{% extends "templates/flash.html" %}  <!--继承闪现模板-->
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}注册{% endblock %}
+{% block content %}
+{{super()}}
+{{wtf.quick_form(form2)}}
+{{wtf.quick_form(form)}}
+{% endblock %}
