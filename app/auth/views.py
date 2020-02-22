@@ -1,7 +1,7 @@
 from flask import render_template,redirect,request,url_for,flash,globals  # 登陆的功能单独开一个蓝本模块
 from .import auth
 from flask_login import login_user,login_required,logout_user,current_user
-from ..models import User
+from ..models import Student,Teacher,return_user_page
 from .forms import LoginForm,ChangeFile_Form,Forget_Form,Check_Code_f
 from flask import session
 from .forms import RegisterForm,Check_Code
@@ -13,14 +13,24 @@ import random
 @auth.route('/login',methods=['GET','POST'])              # 登陆页面
 def login():
     form=LoginForm()
-    if form.validate_on_submit():                         # 如果提交表单
-        user=User.query.filter_by(id=form.id.data).first()    # 查找id所对应的对象
-        if user is not None and user.verify_password(form.old_pw.data):  # 如果对象存在且密码正确
-            login_user(user,form.remenber_me.data)        # 把用户标记为以登陆，同时是否记住，从这里开始就可以用current_user来操作
-            next=request.args.get('next')                 # 引用next 参数来辅助判断，查询字符串保存到当中，如果是原来字符串，则说明数据库中没有该角色，不能登陆，如果变了，则访问了首页，能标记登陆
-            if next is None or not next.startswith('/'):
-                next=url_for('main.index')
-            return redirect(next)
+    if form.validate_on_submit():# 如果提交表单
+        if form.role.data==1:
+            student=Student.query.filter_by(id=form.id.data).first()    # 查找id所对应的对象
+            if student is not None and student.verify_password(form.old_pw.data):
+                login_user(student, form.remenber_me.data)
+                next = request.args.get(
+                    'next')  # 引用next 参数来辅助判断，查询字符串保存到当中，如果是原来字符串，则说明数据库中没有该角色，不能登陆，如果变了，则访问了首页，能标记登陆
+                if next is None or not next.startswith('/'):
+                    next = url_for('main.index')
+                return redirect(next)
+        elif form.role.data==2:
+            teacher = Teacher.query.filter_by(id=form.id.data).first()
+            if teacher is not None and teacher.verify_password(form.old_pw.data): # 如果对象存在且密码正确
+                login_user(teacher,form.remenber_me.data)        # 把用户标记为以登陆，同时是否记住，从这里开始就可以用current_user来操作
+                next=request.args.get('next')                 # 引用next 参数来辅助判断，查询字符串保存到当中，如果是原来字符串，则说明数据库中没有该角色，不能登陆，如果变了，则访问了首页，能标记登陆
+                if next is None or not next.startswith('/'):
+                    next=url_for('main.teacher')
+                return redirect(next)
         flash('不合法的用户名或密码')
     return render_template('auth/login.html',form=form)
 
@@ -45,13 +55,20 @@ def register():
     elif form.validate_on_submit():                       # 用户拿到验证码后，进行信息的填写并提交
         code2=form.code.data                              # 拿到用户输入的验证码，与生成的验证码做对比
         if code2==session.get('code'):              # 如果验证码正确则向数据库中插入数据
-            user=User(id=form.id.data,
-                      name=form.name.data,
-                      password=form.cf_pw.data,
-                      phone=session.get('phone'),
-                      role_id=1)
+            if form.role.data==1:
+                globals.g.user = Student(id=form.id.data,
+                                         name=form.name.data,
+                                         password=form.cf_pw.data,
+                                         phone=session.get('phone'))
+                                       # role_id=1)
+            elif form.role.data==2:
+                globals.g.user = Teacher(id=form.id.data,
+                                         name=form.name.data,
+                                         password=form.cf_pw.data,
+                                         phone=session.get('phone'))
+
             try:
-                db.session.add(user)         # 添加到数据库中
+                db.session.add(globals.g.user)         # 添加到数据库中
                 db.session.commit()           # 提交
                 flash('注册成功，现在可以登陆')
             except:
@@ -80,7 +97,7 @@ def Change_File():                                       # 改密码提交的相
             db.session.add(current_user)
             db.session.commit()
             flash('你已经成功修改了基本信息')         # 闪现消息
-            return redirect(url_for('main.index'))          # 这里是main。pw
+            return return_user_page(current_user.id)          # 这里是main。pw
         else:
             flash('输入的密码有误')
     return render_template('auth/change_pw.html', form=form)
@@ -93,21 +110,36 @@ def forget_password():         # 忘记密码可以凭借学号，通过查询�
     if form2.validate_on_submit():
         session['code'] = random.randint(1000, 9999)
         session['id'] = form2.id.data
-        user = User.query.filter_by(id=session.get('id')).first()
-        if user is not None:
-            phone=user.phone
-            p = check_number(session.get('code'), phone)
-            flash(p)
-        else:
-            flash('您输入的手机号有误')
-    elif form.validate_on_submit():
+        session['role']=form2.role.data
+        if session.get('role')==1:
+            user = Student.query.filter_by(id=session.get('id')).first()
+            if user is not None:
+                phone=user.phone
+                p = check_number(session.get('code'), phone)
+                flash(p)
+            else:
+                flash('您输入的手机号有误')
+        elif session.get('role')==2:
+            user=Teacher.query.filter_by(id=session.get('id')).first()
+            if user is not None:
+                phone=user.phone
+                p = check_number(session.get('code'), phone)
+                flash(p)
+            else:
+                flash('您输入的手机号有误')
+    elif form.validate_on_submit():    # 改的操作，先获取对象，再进行相应属性的改变，然后提交
         code2 = form.code.data
         if code2 == session.get('code'):
-            user = User(name=form.name.data,
-                        password=form.cf_pw.data,
-                        role_id=1)
+            if session.get('role')==1:
+                user = Student.query.filter_by(id=session.get('id')).first()
+                user.name=form.name.data
+                user.password=form.cf_pw.data
+            elif session.get('role')==2:
+                user = Teacher.query.filter_by(id=session.get('id')).first()
+                user.name = form.name.data
+                user.password = form.cf_pw.data
+
             try:
-                db.session.add(user)
                 db.session.commit()
                 flash('密码重置成功')
             except:

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField,BooleanField,IntegerField,ValidationError
+from wtforms import StringField, SubmitField, PasswordField,BooleanField,IntegerField,ValidationError,SelectField
 from wtforms.validators import DataRequired, Regexp, EqualTo,Email,NumberRange
-from ..models import User
+from ..models import Student,Teacher
 
 # 跟登陆相关的各种表单类
 
@@ -9,12 +9,14 @@ class LoginForm(FlaskForm):                            # 定义表单类.
     id=IntegerField('学号',validators=[DataRequired(),NumberRange(0,999999999999999)])
     old_pw = PasswordField('密码', validators=[DataRequired(),
                            Regexp('^(?![0-9]+$)(?![a-zA-Z]+$)[a-zA-Z0-9]{8,16}$')])  # 8到16位的数字字母组合
+    role = SelectField(label='角色', validators=[DataRequired()], choices=[(1, '学生'), (2, '教师')], coerce=int)
     remenber_me=BooleanField('记住登陆状态')
     submit = SubmitField('登陆')
 
 
 class RegisterForm(FlaskForm):
     code = IntegerField('验证码',validators=[DataRequired(),NumberRange(0,9999)])
+    role= SelectField(label='请选择角色',validators=[DataRequired()],choices=[(1,'学生'),(2,'教师')],coerce=int)
     id = IntegerField('账号（填写学号）', validators=[DataRequired(),NumberRange(0,999999999999999)])
     pw = PasswordField('密码（必须为8到16位的数字字母组合）', validators=[DataRequired(),
                            Regexp('^(?![0-9]+$)(?![a-zA-Z]+$)[a-zA-Z0-9]{8,16}$')])  # 8到16位的数字字母组合
@@ -25,8 +27,10 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('注册')
 
     def validate_id(self,field):
-        if User.query.filter_by(id=field.data).first():
-            raise ValidationError('账号已经存在')
+        if Student.query.filter_by(id=field.data).first():
+            raise ValidationError('学生账号已经存在')
+        elif Teacher.query.filter_by(id=field.data).first():
+            raise ValidationError('教师账号已经存在')
 
 
 
@@ -46,9 +50,6 @@ class Check_Code(FlaskForm):
     coder = SubmitField('点击发送验证码')
 
 
-    def validate_id(self,field):
-        if User.query.filter_by(id=field.data).first():
-            raise ValidationError('账号已经存在')
 
 class Forget_Form(FlaskForm):
     code = IntegerField('验证码',validators=[DataRequired(),NumberRange(0,9999)])
@@ -60,10 +61,8 @@ class Forget_Form(FlaskForm):
 
     submit = SubmitField('重置')
 
-    def validate_id(self,field):
-        if User.query.filter_by(id=field.data).first():
-            raise ValidationError('账号已经存在')
 
 class Check_Code_f(FlaskForm):
     id = IntegerField('账号（填写学号）', validators=[DataRequired(), NumberRange(0, 999999999999999)])
+    role= SelectField(label='请选择角色',validators=[DataRequired()],choices=[(1,'学生'),(2,'教师')],coerce=int)
     coder = SubmitField('点击发送验证码')
