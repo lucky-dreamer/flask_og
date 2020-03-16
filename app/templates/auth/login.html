@@ -3,7 +3,7 @@
 {% block title %}登陆{% endblock %}
 {% block content %}
 {{super()}}
-{{wtf.quick_form(form)}}           <!--渲染表单-->
+{{wtf.quick_form(form)}}  <!--渲染表单-->
 <div class="btn btn-info" style="float:left">
     <a href="{{url_for('auth.register')}}">注册</a>
 </div>

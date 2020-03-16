@@ -1,0 +1,34 @@
+{% extends "templates/flash.html" %}
+{% block content %}
+{{super()}}
+<h4>你的指导教师为:{{teacher}}老师</h4>
+<p>说明：请在{{teacher_time}}之前完成初选，初选可以超过教师的课程容量</p>
+<p>说明：初选过后超过课程容量的老师带的学生会有一部分被踢出，请在{{final_time}}之前确保自己已经选上导师</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>教师编号</th>
+            <th>教师姓名</th>
+            <th>课题</th>
+            <th>简介</th>
+            <th>课程容量</th>
+            <th>已选人数</th>
+            <th>选择</th>
+        </tr>
+    </thead>
+    <tbody>                                  <!--可以用嵌套循环实现！-->
+        {% for i in contented %}
+            <tr>
+                {% for j in i %}
+                    <td>
+                          {{j}}
+                    </td>
+                {% endfor %}
+                <td>             <!--构造动态路由以区分每个选择按键穿的参数不同-->
+                    <button class="btn-default" onclick="window.location.href='{{url_for('main.after_choice',id=i[0])}}'">选择</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

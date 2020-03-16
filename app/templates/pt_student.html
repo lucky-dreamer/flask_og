@@ -7,15 +7,16 @@
 {{moment.locale('zh-cn')}}    <!--设置时间中文语言显示-->
 {% endblock %}
 
-{% block content %}     <!--div相当于一个盒子，用于模块的划分以及布局，一个div相当于一个模块。也可进行一层一层的嵌套-->
+{% block content %}<!--div相当于一个盒子，用于模块的划分以及布局，一个div相当于一个模块。也可进行一层一层的嵌套-->
+{{super()}}
 <div class="container bg-info" style="width:100%">    <!--使用容器container统一装载以下元素方便应用背景以及样式 样式全部写到style中-->
     <div style="float:left" class="col-xs-9 col-lg-11">  <!--这个模块向左漂移，在同一行之中。其他如果和他一行，必须设置相应的漂移进行布局，否则默认从下一行开始。（所有代码不设置漂移的话都是从上到下编写）-->
-        <h1>
-            &nbsp;&nbsp;&nbsp;&nbsp;内蒙古工业大学实践教学学生服务平台 <!--&nbsp;代表网页中显示的空格-->
-        </h1>
-        <h4>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{moment(curnt_time).format('LLLL')}}&nbsp;&nbsp;2019-2020学年第1学期&nbsp第20教学周
-        </h4>                             <!--渲染current_time并进行相应的编码，L的个数代表复杂程度-->
+        <h2>
+            &nbsp;内蒙古工业大学实践教学学生服务平台 <!--&nbsp;代表网页中显示的空格-->
+        </h2>
+        <p>
+            &nbsp;&nbsp;{{moment(current_time).format('LLLL')}}
+        </p>                             <!--渲染current_time并进行相应的编码，L的个数代表复杂程度-->
     </div>
     <div style="float:right" class="col-xs-3 col-lg-1">   <!--对应的右漂移，整个 大模块向右，其中的子模块从上到下填写-->
         <p>
@@ -37,13 +38,13 @@
     <div>  <!--这个模块为左边的导航栏-->
         <div class="dropdown" style="float:left"> <!--绑定一个dropdown的样式-->
             <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                毕业设计        <!--先创建一个按钮，用来承载点击，设置按钮样式和下拉样式，通过data-toggle绑定下拉事件，调整一下宽度进行统一-->
+                选择导师        <!--先创建一个按钮，用来承载点击，设置按钮样式和下拉样式，通过data-toggle绑定下拉事件，调整一下宽度进行统一-->
                 <span class="caret"></span> <!--创建一个角标caret-->
             </button>
             <ul class="dropdown-menu">      <!--创建下拉列表，ul=unorder list,li=list item-->
                 <li>
-                    <a href="http://www.7k7k.com" target="content">
-                        校外毕业设计        <!--设置点击这里跳转的目标页面，同时通过target和name组合进行按钮触发与iframe里面页面的绑定-->
+                    <a href="{{url_for('main.first_choice')}}" target="content">
+                        师生互选系统        <!--设置点击这里跳转的目标页面，同时通过target和name组合进行按钮触发与iframe里面页面的绑定-->
                     </a>
                 </li>
             </ul>
@@ -75,7 +76,7 @@
         </div>
         <div class="dropdown" style="float:left">
             <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                大学生创新创业
+                大学创新
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">

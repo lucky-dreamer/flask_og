@@ -28,13 +28,16 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../case" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\flask_og\app\templates\auth" />
       <recent name="G:\flask_og\app\auth" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\flask_og\app\templates" />
     </key>
   </component>
   <component name="RunManager">
@@ -79,10 +82,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1582285424219">
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1584012604184">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1582285424219" />
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1584012604184" />
     <state width="1345" height="223" key="GridCell.Tab.0.bottom" timestamp="1581666866447">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -119,21 +122,21 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1581845410502" />
-    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1581845101401">
+    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1584276728022">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1581845101401" />
-    <state x="92" y="92" width="1182" height="543" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1582040584807">
+    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1584276728022" />
+    <state x="92" y="92" width="1182" height="543" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1584276728022">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="92" y="92" width="1182" height="543" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1582040584807" />
-    <state x="363" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1582285382762">
+    <state x="92" y="92" width="1182" height="543" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1584276728022" />
+    <state x="363" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1584322732153">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="363" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1582285382762" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1581501890247">
+    <state x="363" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584322732153" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1584338356144">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1581501890247" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1584338356144" />
   </component>
 </project>
