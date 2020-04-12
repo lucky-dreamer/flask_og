@@ -1,0 +1,7 @@
+{% extends "templates/flash.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}签到{% endblock %}
+{% block content %}
+{{super()}}
+{{wtf.quick_form(form)}}
+{% endblock %}

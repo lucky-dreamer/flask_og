@@ -53,55 +53,64 @@
                 </li>
             </ul>
         </div>
-        <div style="float:left">
-            <button class="btn btn-success" style="width:103%">
-                <a href="https://www.baidu.com" style="color:white" target="content">
-                    实验教学</a>                    <!--使用url_for函数在模板中调用同一应用中的其他网页链接-->
-                <span class="caret"></span>
-            </button>
-        </div>
         <div class="dropdown" style="float:left">
             <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                学科竞赛
+                公告模块
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="https://www.baidu.com" target="content">
-                        学科竞赛
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.baidu.com" target="content">
-                        我参与的竞赛
+                    <a href="{{url_for('main.up_inform')}}" target="content">
+                        发布公告
                     </a>
                 </li>
             </ul>
         </div>
         <div class="dropdown" style="float:left">
             <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                大学创新
+                成绩评定
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="https://www.baidu.com" target="content">
-                        创新项目申请
+                    <a href="{{url_for('main.generate_grades')}}" target="content">
+                        成绩评定
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.baidu.com" target="content">
-                        我申请的项目
+                    <a href="{{url_for('main.grade_result')}}" target="content">
+                        学生成绩查询
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown" style="float:left">
+            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
+                发起签到
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="{{url_for('main.sign_number')}}" target="content">
+                        发起签到
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.baidu.com" target="content">
-                        我参与的项目
+                    <a href="{{url_for('main.signed')}}" target="content">
+                        学生签到情况
                     </a>
                 </li>
+            </ul>
+        </div>
+        <div class="dropdown" style="float:left">
+            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
+                线上答疑
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
                 <li>
-                    <a href="https://www.baidu.com" target="content">
-                        自主项目申报
+                    <a href="{{url_for('main.questions_for_teacher')}}" target="content">
+                        问题答疑
                     </a>
                 </li>
             </ul>

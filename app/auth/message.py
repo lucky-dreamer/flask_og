@@ -1,7 +1,7 @@
 import urllib.request,  sys
 import ssl
 
-#  短信验证码接口api
+ # 短信验证码接口api
 
 def check_number(code,phone):
     host = 'https://smsmsgs.market.alicloudapi.com'

@@ -1,0 +1,25 @@
+{% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
+{% block title %}学生的问题{% endblock %}
+{% block content %}
+{{super()}}
+<div>
+    <ul>
+        {% for i in lis %}
+            <li>
+                <div class="panel-success">
+                    <div class="panel-body">
+                        <p>{{i.student.name}}({{i.time}}):</p>
+                        <p>{{i.content}}</p>
+                    </div>
+                    <div class="panel-footer">
+                        {% for j in i.replies %}
+                            <p>{{j.person}} {{j.time}}</p>
+                            <p>{{j.content}}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

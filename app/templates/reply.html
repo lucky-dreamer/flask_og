@@ -1,0 +1,7 @@
+{% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}提问{% endblock %}
+{% block content %}
+{{super()}}
+{{wtf.quick_form(form)}}
+{% endblock %}

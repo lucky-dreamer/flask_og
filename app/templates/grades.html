@@ -1,0 +1,8 @@
+{% extends "templates/flash.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}成绩{% endblock %}
+{% block content %}
+{{super()}}
+<p>请输入权重，例如：如果占比为百分之30，请输入0.3 (仅支持小数其他格式无效)</p>
+{{wtf.quick_form(form1)}}
+{% endblock %}

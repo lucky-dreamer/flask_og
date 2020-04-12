@@ -1,0 +1,28 @@
+{% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
+{% block title %}公告{% endblock %}
+{% block content %}
+{{super()}}
+<table class="table">
+    <thead>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>成绩</th>
+    </thead>
+    <tbody>                                  <!--可以用嵌套循环实现！-->
+        {% for i in students %}
+            <tr>
+                <td>
+                    {{i.id}}
+                </td>
+                <td>
+                    {{i.name}}
+                </td>
+                <td>
+                    {{i.grade}}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<button class="btn-default" onclick="window.location.href='{{url_for('main.generate_grades')}}'">修改</button>
+{% endblock %}

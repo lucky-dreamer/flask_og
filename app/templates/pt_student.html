@@ -49,55 +49,51 @@
                 </li>
             </ul>
         </div>
-        <div style="float:left">
-            <button class="btn btn-success" style="width:103%">
-                <a href="https://www.baidu.com" style="color:white" target="content">
-                    实验教学</a>                    <!--使用url_for函数在模板中调用同一应用中的其他网页链接-->
-                <span class="caret"></span>
-            </button>
-        </div>
         <div class="dropdown" style="float:left">
             <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                学科竞赛
+                说明书提交
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="https://www.baidu.com" target="content">
-                        学科竞赛
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.baidu.com" target="content">
-                        我参与的竞赛
+                    <a href="{{url_for('main.up_file')}}" target="content">
+                        上传文件
                     </a>
                 </li>
             </ul>
         </div>
         <div class="dropdown" style="float:left">
             <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                大学创新
+                签到系统
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="https://www.baidu.com" target="content">
-                        创新项目申请
+                    <a href="{{url_for('main.sign_in')}}" target="content">
+                        开始签到
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown" style="float:left">
+            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
+                沟通答疑
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="{{url_for('main.ask_question')}}" target="content">
+                        提问
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.baidu.com" target="content">
-                        我申请的项目
+                    <a href="{{url_for('main.my_question')}}" target="content">
+                        我的提问
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.baidu.com" target="content">
-                        我参与的项目
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.baidu.com" target="content">
-                        自主项目申报
+                    <a href="{{url_for('main.questions')}}" target="content">
+                        问题汇总
                     </a>
                 </li>
             </ul>
@@ -107,7 +103,7 @@
 <!--        &nbsp;&nbsp;&nbsp;-->
 <!--    </div>-->
     <div style="width:100%">  <!--系统对于div而言，给定了一个默认的宽度，由于默认值太小，为了正确的显示，这里调整为100%-->
-        <iframe name="content" frameborder="0" width="100%" height="450px">
+        <iframe name="content" frameborder="0" width="100%" height="450px" src="{{url_for('main.informs')}}">
         </iframe> <!-- 内部框架，为了实现改变页面，框架内的内容更新而框架外的内容不更新-->
     </div>
 </div>

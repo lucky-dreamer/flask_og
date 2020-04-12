@@ -1,0 +1,24 @@
+{% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
+{% block title %}公告{% endblock %}
+{% block content %}
+{{super()}}
+<div>
+    <table class="table">
+        <thead>
+            <th>公告栏</th>
+        </thead>
+        <tbody>
+           {% for i in inform %}
+                <tr>
+                    <td>
+                        <a class="h4" href="{{i.url}}">{{i.title}}</a>
+                    </td>
+                    <td>
+                        <button onclick="window.location.href='{{url_for('main.delete_inform',url=li[i])}}'">删除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
