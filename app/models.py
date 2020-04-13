@@ -101,7 +101,7 @@ class Reply(db.Model, UserMixin):
 def load_user(user_id):
     if int(user_id)>99999999999:
         return Student.query.get(int(user_id))
-    elif int(user_id)<999999999999:
+    elif int(user_id)<99999999999:
         return Teacher.query.get(int(user_id))
 
 

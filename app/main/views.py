@@ -144,7 +144,7 @@ def sign_in():
 
 @main.route('/ask_question', methods=['GET', 'POST'])  # 这里后期还可以改用富文本编辑器
 def ask_question():
-    form = AskForm()
+    form = AskForm()  # 将学生提问数据存到数据库中
     if form.validate_on_submit():
         ct=Question(time=datetime.now().strftime('%m-%d %H:%M'),
                     content=form.question.data,
@@ -156,7 +156,7 @@ def ask_question():
 
 
 @main.route('/questions')
-def questions():
+def questions():  # 查看所有同组同学提过的问题以及老师的解答
     lis = []
     for x in current_user.teacher.students:
         for j in x.questions:
@@ -165,7 +165,7 @@ def questions():
 
 
 @main.route('/my_question')
-def my_question():
+def my_question():   # 查看自己的提问
     question=current_user.questions
     return render_template('my_question.html',question=question)
 
@@ -377,16 +377,16 @@ def signed():
 
 
 @main.route('/teacher/questions_for_teacher')
-def questions_for_teacher():
+def questions_for_teacher():  # 教师查看自己学生的问题
     lis = []
     for x in current_user.students:
         for j in x.questions:
-            lis.append(j)
+            lis.append(j)  # 将所有问题暂存一个列表之中
     return render_template('questions_for_teacher.html',lis=lis)
 
 
 @main.route('/teacher/reply/<id>', methods=['GET', 'POST'])
-def reply(id):
+def reply(id):  # 进行问题的回复，这里学生回复一样用这个视图函数
     form=ReplyForm()
     if form.validate_on_submit():
         reply=Reply(time=datetime.now().strftime('%m-%d %H:%M'),
@@ -395,7 +395,10 @@ def reply(id):
                     person=current_user.name)
         db.session.add(reply)
         db.session.commit()
-        return redirect(url_for('main.questions_for_teacher'))
+        if current_user.id > 99999999999:  # 判断是教师还是学生，回复过后返回相应的页面
+            return redirect(url_for('main.my_question'))
+        elif current_user.id < 99999999999:
+            return redirect(url_for('main.questions_for_teacher'))
     return render_template('reply.html',form=form)
 
 
