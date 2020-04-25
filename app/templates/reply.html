@@ -4,4 +4,6 @@
 {% block content %}
 {{super()}}
 {{wtf.quick_form(form)}}
+{{ ckeditor.load() }}
+{{ ckeditor.config(name='reply')}}
 {% endblock %}

@@ -16,12 +16,12 @@ class Student(db.Model, UserMixin):
         name = db.Column(db.String(5))                    # 真实姓名
         phone = db.Column(db.String(64))  # 手机号
         hash_password = db.Column(db.String(128), nullable=False)  # 密码
-        teacher_id = db.Column(db.BigInteger, db.ForeignKey('tb_teacher.id'))  # 学生所属教师的id
         file_url=db.Column(db.String(128))  # 说明书文件的链接
         file_name=db.Column(db.String(64))  # 说明书的名字
         grade=db.Column(db.String(5))       # 学生成绩
         is_sign = db.Column(db.Integer,default=0)  # 学生的签到状态
         sign_times=db.Column(db.Integer,default=0)  # 学生累计签到次数
+        teacher_id = db.Column(db.BigInteger, db.ForeignKey('tb_teacher.id'))  # 学生所属教师的id
         questions = db.relationship('Question', backref='student')
 
 # 在多端加入外键，在一端加入关系
@@ -70,7 +70,7 @@ class Teacher(db.Model, UserMixin):
 
 class Informs(db.Model, UserMixin):
     __tablename__='tb_inform'
-    title = db.Column(db.String(64))  # 通知的标题
+    title = db.Column(db.String(64))  # 通知的标题（文件名）
     url=db.Column(db.String(128),primary_key=True)  # 通知的链接
     teacher_id = db.Column(db.BigInteger, db.ForeignKey('tb_teacher.id'))  # 教师的id作为这个表的外键
 
@@ -96,19 +96,18 @@ class Reply(db.Model, UserMixin):
 #  下面是自己定义的函数
 
 
-
 @login_manager.user_loader   # 由于学生学号是12位，教师工号是11位，顾进行回调加载用户
 def load_user(user_id):
-    if int(user_id)>99999999999:
+    if int(user_id) > 99999999999:
         return Student.query.get(int(user_id))
-    elif int(user_id)<99999999999:
+    elif int(user_id) < 99999999999:
         return Teacher.query.get(int(user_id))
 
 
 def return_user_page(user_id):               # 定义一个方法，用于判断是老师还是学生，从而返回相应的首页
-    if int(user_id)>99999999999:
+    if int(user_id) > 99999999999:
         return redirect(url_for('main.index'))
-    elif int(user_id)<99999999999:
+    elif int(user_id) < 99999999999:
         return redirect(url_for('main.teacher'))
 
 # datetime 本身支持比较大小
@@ -118,7 +117,7 @@ def return_user_page(user_id):               # 定义一个方法，用于判断
 def check_file(filename):  #首先判断他的文件名正确，然后改名字，保存
     if '.' in filename and filename.rsplit('.',1)[1] in config.Config.ALLOWED_EXTENSIONS:
         ext=os.path.splitext(filename)[1]
-        new_filename=uuid.uuid4().hex+ext
+        new_filename = uuid.uuid4().hex+ext
         return new_filename
     else:
         return None

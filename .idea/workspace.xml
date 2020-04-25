@@ -31,16 +31,18 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/templates" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/static/upfile" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\flask_og\app\static\js" />
       <recent name="G:\flask_og\app\templates" />
       <recent name="G:\flask_og\app\templates\auth" />
       <recent name="G:\flask_og\app\auth" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\flask_og\app\static\upfile" />
       <recent name="G:\flask_og\app\templates" />
       <recent name="G:\flask_og\venv\Lib\site-packages" />
       <recent name="G:\flask_og\venv\Lib\site-packages\flask_bootstrap\templates\templates" />
@@ -61,6 +63,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/flasky.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="views (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask_og" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app/main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/main/views.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -93,6 +116,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.flasky" />
+        <item itemvalue="Python.views (1)" />
         <item itemvalue="Python.views" />
       </list>
     </recent_temporary>
@@ -128,69 +152,81 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="22" key="#Inspections/0.0.1366.728@0.0.1366.728" timestamp="1585063519909" />
+    <state x="275" y="22" key="#Notifications" timestamp="1586781471119">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="22" key="#Notifications/0.0.1366.728@0.0.1366.728" timestamp="1586781471119" />
     <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586445370572">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1586445370572" />
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog" timestamp="1587713121909">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1587713121909" />
     <state x="604" y="204" key="FileChooserDialogImpl" timestamp="1586657339680">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="604" y="204" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1586657339680" />
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1586486694893">
+    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1587647221369">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586486694893" />
-    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1586486694893">
+    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1587647221369" />
+    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1587647221369">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1586486694893" />
-    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1586486694893">
+    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1587647221369" />
+    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1587647221368">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1586486694893" />
-    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1586486694893">
+    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1587647221368" />
+    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1587647221369">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1586486694893" />
-    <state width="1345" height="223" key="GridCell.Tab.1.bottom" timestamp="1581666866448">
+    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1587647221369" />
+    <state width="1345" height="223" key="GridCell.Tab.1.bottom" timestamp="1587435438288">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="223" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1581666866448" />
-    <state width="1345" height="223" key="GridCell.Tab.1.center" timestamp="1581666866448">
+    <state width="1345" height="223" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1587435438288" />
+    <state width="1345" height="223" key="GridCell.Tab.1.center" timestamp="1587435438288">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="223" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1581666866448" />
-    <state width="1345" height="223" key="GridCell.Tab.1.left" timestamp="1581666866448">
+    <state width="1345" height="223" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1587435438288" />
+    <state width="1345" height="223" key="GridCell.Tab.1.left" timestamp="1587435438288">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="223" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1581666866448" />
-    <state width="1345" height="223" key="GridCell.Tab.1.right" timestamp="1581666866448">
+    <state width="1345" height="223" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1587435438288" />
+    <state width="1345" height="223" key="GridCell.Tab.1.right" timestamp="1587435438288">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1581666866448" />
-    <state x="184" y="6" key="SettingsEditor" timestamp="1586657342458">
+    <state width="1345" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1587435438288" />
+    <state x="184" y="6" key="SettingsEditor" timestamp="1587714856356">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1586657342458" />
-    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1584276728022">
+    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1587714856356" />
+    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1587713121909">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1584276728022" />
-    <state x="92" y="92" width="1182" height="543" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1586083446995">
+    <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1587713121909" />
+    <state x="92" y="92" width="1182" height="543" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1587726543917">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="92" y="92" width="1182" height="543" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1586083446995" />
-    <state x="363" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1586763916521">
+    <state x="92" y="92" width="1182" height="543" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1587726543917" />
+    <state x="363" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1587727392449">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="363" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1586763916521" />
+    <state x="363" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1587727392449" />
+    <state x="359" y="0" width="708" height="728" key="find.popup" timestamp="1587726300019">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="359" y="0" width="708" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1587726300019" />
     <state x="359" y="210" width="716" height="307" key="org.intellij.images.editor.actions.BackgroundImageDialog" timestamp="1586657341564">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="359" y="210" width="716" height="307" key="org.intellij.images.editor.actions.BackgroundImageDialog/0.0.1366.728@0.0.1366.728" timestamp="1586657341564" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1586678442654">
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1587727705477">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1586678442654" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1587727705477" />
   </component>
 </project>

@@ -3,11 +3,12 @@ from wtforms import StringField, SubmitField, PasswordField,TextAreaField,Intege
 from wtforms.validators import DataRequired, Regexp, EqualTo,length
 from flask_wtf.file import FileField,FileAllowed,FileRequired
 import config
+from flask_ckeditor import CKEditorField
 
 
 class generate_introduce_Form(FlaskForm):  # 定义表单类
     theme = StringField('我的课题', validators=[DataRequired()])  # 类变量相应的字段，label,及验证函数..
-    introduce = TextAreaField('简介',validators=[DataRequired()])
+    introduce = CKEditorField('简介',validators=[DataRequired()])
     contain = IntegerField('课程容量',validators=[DataRequired()])
     teacher_time=StringField('教师选择时间（格式：xxxx-xx-xx,请用英文输入法）（学生必须在这个时间之前完成初选）',validators=[DataRequired(),length(min=10,max=10)])
     final_time=StringField('最终截至时间（格式：xxxx-xx-xx,请用英文输入法）（学生必须在这个时间之前确定自己已经选上导师）',validators=[DataRequired(),length(min=10,max=10)])
@@ -46,10 +47,11 @@ class StudentNumberForm(FlaskForm):
 
 
 class AskForm(FlaskForm):
-    question = TextAreaField('请输入你的问题',validators=[DataRequired()])
+    question = CKEditorField('请输入你的问题',validators=[DataRequired()])
     submit = SubmitField('提交')
 
 
 class ReplyForm(FlaskForm):
-    reply = TextAreaField('发表回复',validators=[DataRequired()])
+    # reply = TextAreaField('发表回复',validators=[DataRequired()])
+    reply=CKEditorField('发表回复',validators=[DataRequired()])
     submit = SubmitField('回复')

@@ -8,13 +8,13 @@
             <li>
                 <div class="panel-success">
                     <div class="panel-body">
-                        <p>{{i.student.name}}({{i.time}}):</p>
-                        <p>{{i.content}}</p>
+                        <p>{{i.student.name}}&nbsp;<{{i.time}}>:</p>
+                        {{i.content | safe}}
                     </div>
                     <div class="panel-footer">
                         {% for j in i.replies %} <!-- 在每一个问题之中，循环访问每个问题的回复的属性-->
-                            <p>{{j.person}} {{j.time}}</p>
-                            <p>{{j.content}}</p>
+                            <p>{{j.person}} &nbsp;<{{j.time}}></p>
+                            {{j.content | safe}}
                         {% endfor %}
                         <button onclick="window.location.href='{{url_for('main.reply',id=i.id)}}'">回复</button>
                     </div> <!--传回id 标记回答的是哪个问题-->

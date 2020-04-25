@@ -1,16 +1,17 @@
 from flask import render_template,session,flash,redirect,url_for,request,send_from_directory
 from datetime import datetime
 from .import main
-from .forms import generate_introduce_Form,Inform,FileForm,GradePowerForm,SignNumberForm,StudentNumberForm,AskForm,ReplyForm
+from .forms import generate_introduce_Form, Inform, FileForm, GradePowerForm, SignNumberForm, StudentNumberForm, AskForm, ReplyForm
 import pymysql
 from ..email import send_email
 from flask_login import login_required
 from ..models import check_file
 from flask_login import current_user
-from ..models import Informs,Question,Student,Reply
+from ..models import Informs,Question,Student,Reply,Teacher
 import os
 from .. import db
 import config
+from flask_ckeditor import upload_fail,upload_success
 
 
 @main.route('/')             # 这里把学生登陆首页作为网页的根页面
@@ -30,15 +31,15 @@ def first_choice():  # 这里的查询语句比较复杂，所以用pymysql会�
     contented = []     # 用于存放最终的数据
     con = pymysql.connect(host='localhost',port=3306,user='root',password=os.environ.get('ps'),database='db_pw')  # 这里后期要改
     cursor=con.cursor()
-    sql1 = 'select id,name,theme,introduction,contain from tb_teacher where introduction is not NULL'
+    sql1 = 'select id,name,theme,contain from tb_teacher where introduction is not NULL'
     cursor.execute(sql1)  # 从教师表中查询的数据
     content=cursor.fetchall()
     cursor.close()
     cursor = con.cursor()
     for x in content:
         p=list(x)   # 转化为列表方便增加元素
-        sql2 = 'select count(tb_student.teacher_id) from tb_student,tb_teacher where tb_student.teacher_id' \
-               '=tb_teacher.id and tb_teacher.id = {}'.format(
+        sql2 = 'select count(tb_student.teacher_id) from ' \
+               'tb_student,tb_teacher where tb_student.teacher_id=tb_teacher.id and tb_teacher.id = {}'.format(
             x[0])  # 用连接查询统计出每位教师被多少名学生选择
         cursor.execute(sql2)
         s=cursor.fetchone()[0]
@@ -54,6 +55,12 @@ def first_choice():  # 这里的查询语句比较复杂，所以用pymysql会�
     cursor.close()
     con.close()
     return render_template('first_choice.html', contented=contented,teacher=teacher,teacher_time=teacher_time,final_time=final_time)
+
+
+@main.route('/introduce<id>')
+def introduces(id):
+    introduction=Teacher.query.filter_by(id=id).first().introduction
+    return render_template('introduce.html',introduction=introduction)
 
 
 @main.route('/after_choice/<id>')
@@ -76,13 +83,13 @@ def after_choice(id):     # 学生选择完之后进行相应的操作
         db.session.add(current_user)
         db.session.commit()
         flash('选择成功')
-    elif now>teacher_time:  # 终选
-        if selected<contain:
+    elif now > teacher_time:  # 终选
+        if selected < contain:
             current_user.teacher_id = id  # 选完以后，存入相应的教师id
             db.session.add(current_user)
             db.session.commit()
             flash('选择成功')
-        elif selected>=contain:
+        elif selected >= contain:
             flash('已经选满')
     return redirect(url_for('main.first_choice'))
 
@@ -161,12 +168,14 @@ def questions():  # 查看所有同组同学提过的问题以及老师的解答
     for x in current_user.teacher.students:
         for j in x.questions:
             lis.append(j)
+    lis=lis[::-1]
     return render_template('questions.html',lis=lis)
 
 
 @main.route('/my_question')
 def my_question():   # 查看自己的提问
     question=current_user.questions
+    question=question[::-1]
     return render_template('my_question.html',question=question)
 
 
@@ -257,16 +266,6 @@ def deletes(id):   # 传回学生id用于待会儿查询
     return redirect(url_for('main.teacher_choice'))
 
 
-@main.route('/uploads/<filename>')
-def openform(filename):        # 根据路径下载以及打开文件
-    return send_from_directory(config.Config.UPLOAD_FOLDER,filename=filename)
-
-
-@main.route('/upfile/<filename>')
-def openfile(filename):        # 根据路径下载以及打开文件
-    return send_from_directory(config.Config.UPFILE_FOLDER,filename=filename)
-
-
 @main.route('/teacher/up_inform/',methods=['GET','POST'])
 def up_inform():  # 上传公告
     form=Inform()
@@ -303,11 +302,11 @@ def my_informs():  # 教师查看公告内容
 
 @main.route('/teacher/delete_inform/<path:url>')   # 数据类型path表明传的是路径，可以包含/
 def delete_inform(url):  # 删除相应的公告
-    x=url.split('uploads/',1)[1]    # 数据库中存的是url，这里拿到文件名
-    path=os.path.join(config.Config.UPLOAD_FOLDER, x)  # 再拼接成完整路径
+    x = url.split('uploads/',1)[1]    # 数据库中存的是url，这里拿到文件名
+    path = os.path.join(config.Config.UPLOAD_FOLDER, x)  # 再拼接成完整路径
     os.remove(path)  # 删除
-    url=url.split(':', 1)[1]
-    tr=Informs.query.filter_by(url=url).first()  # 同时在数据库中删除
+    url = url.split(':', 1)[1]
+    tr = Informs.query.filter_by(url=url).first()  # 同时在数据库中删除
     db.session.delete(tr)
     db.session.commit()
     flash('删除成功')
@@ -316,10 +315,10 @@ def delete_inform(url):  # 删除相应的公告
 
 @main.route('/teacher/generate_grades',methods=['GET','POST'])
 def generate_grades():
-    form1=GradePowerForm()
+    form1 = GradePowerForm()
     if form1.validate_on_submit():
-        session['daily']=form1.daily.data  # 教师输入成绩的权重
-        session['answer']=form1.answer.data
+        session['daily'] = form1.daily.data  # 教师输入成绩的权重
+        session['answer'] = form1.answer.data
         session['final'] = form1.final.data
         flash('设置成功')
         return redirect(url_for('main.math_grade'))  # 进入输入各项成绩的页面
@@ -332,7 +331,7 @@ def math_grade():
     if request.method == 'POST':  # 如果表单提交
         for i in students:  # 通过键拿到输入分数，乘以相应的权重，再相加
             p = eval(request.form.get("{}".format(i.id))) * eval(session.get('daily')) + \
-                      eval(request.form.get("{}".format(i.name))) * eval(session.get('answer')) +\
+                eval(request.form.get("{}".format(i.name))) * eval(session.get('answer')) +\
                 eval(request.form.get("{}".format(i.file_name))) * eval(session.get('final'))
             i.grade=str(p)
         db.session.commit()
@@ -382,6 +381,7 @@ def questions_for_teacher():  # 教师查看自己学生的问题
     for x in current_user.students:
         for j in x.questions:
             lis.append(j)  # 将所有问题暂存一个列表之中
+    lis=lis[::-1]
     return render_template('questions_for_teacher.html',lis=lis)
 
 
@@ -409,4 +409,31 @@ def send_mail():
     return '<h1>发送成功</h1>'
 
 
-print(datetime.now().strftime('%m-%d %H:%M'))
+@main.route('/uploads/<filename>')
+def openform(filename):        # 根据路径下载以及打开文件
+    return send_from_directory(config.Config.UPLOAD_FOLDER,filename=filename)
+
+
+@main.route('/upfile/<filename>')
+def openfile(filename):        # 根据路径下载以及打开文件
+    return send_from_directory(config.Config.UPFILE_FOLDER,filename=filename)
+
+
+@main.route('/open_image/<path:filename>')
+def uploaded_files(filename):
+    path = 'G:/flask_og/app/static/paragraph_image'
+    return send_from_directory(path,filename)
+
+
+@main.route('/upload',methods=['GET','POST'])
+def upload():
+    f = request.files.get('upload')
+    extension = f.filename.split('.')[-1].lower()
+    if extension not in ['jpg', 'gif', 'jpeg', 'png']:
+        return upload_fail(message='只支持图片上传')
+    f.save(os.path.join('G:/flask_og/app/static/paragraph_image', f.filename))
+    url=url_for('main.uploaded_files',filename=f.filename,_external=True)
+    return upload_success(url=url)
+
+
+# print(datetime.now().strftime('%m-%d %H:%M'))

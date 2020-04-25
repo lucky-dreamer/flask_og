@@ -10,9 +10,9 @@
             <th>教师编号</th>
             <th>教师姓名</th>
             <th>课题</th>
-            <th>简介</th>
             <th>课程容量</th>
             <th>已选人数</th>
+            <th>简介</th>
             <th>选择</th>
         </tr>
     </thead>
@@ -24,6 +24,9 @@
                           {{j}}
                     </td>
                 {% endfor %}
+                <td>             <!--构造动态路由以区分每个选择按键穿的参数不同-->
+                    <button class="btn-default" onclick="window.location.href='{{url_for('main.introduces',id=i[0])}}'">查看</button>
+                </td>
                 <td>             <!--构造动态路由以区分每个选择按键穿的参数不同-->
                     <button class="btn-default" onclick="window.location.href='{{url_for('main.after_choice',id=i[0])}}'">选择</button>
                 </td>

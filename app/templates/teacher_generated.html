@@ -5,7 +5,7 @@
 {{super()}}
 <div class="container" style="width:100%">
     <h2>{{theme}}</h2>
-    <p>简介：{{introduce}}</p>   <!--在按钮中添加动作链接-->
+    <p style="float:left">简介：</p> {{introduce | safe}}   <!--在按钮中添加动作链接-->
     <p>课程容量：{{contain}}</p>
     <p>教师选择时间：{{teacher_time}}</p>
     <p>最终确定时间：{{final_time}}</p>
