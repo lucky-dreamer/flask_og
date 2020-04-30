@@ -1,12 +1,15 @@
 {% extends "templates/flash.html" %}
-{% block content %}
+{% block body %}
 {{super()}}
+<body style="background:none">
 <h4>已选人数：{{selected}}&nbsp;课程容量：{{contain}}</h4>
 <h4>请于{{teacher_time}}进行对学生的筛选，确保已选人数小于等于课程容量</h4>
 <table class="table">
     <thead>
         <th>学号</th>
         <th>姓名</th>
+        <th>题目</th>
+        <th>说明书</th>
         <th>操作</th>
     </thead>
     <tbody>                                  <!--可以用嵌套循环实现！-->
@@ -18,6 +21,12 @@
                 <td>
                     {{i.name}}
                 </td>
+                <td>
+                    {{i.personal_theme}}
+                </td>
+                <td>
+                <a href="{{i.file_url}}">{% if i.file_name %}{{i.file_name}}{% else %}未上传{% endif %}</a>
+                </td>
                 <td>             <!--构造动态路由以区分每个选择按键穿的参数不同-->
                     <button class="btn-default" onclick="window.location.href='{{url_for('main.deletes',id=i.id)}}'">删除</button>
                 </td>
@@ -25,4 +34,6 @@
         {% endfor %}
     </tbody>
 </table>
+</body>
+<button class="btn-default" onclick="window.location.href='{{url_for('main.different_theme')}}'">为学生设置不同题目</button>
 {% endblock %}

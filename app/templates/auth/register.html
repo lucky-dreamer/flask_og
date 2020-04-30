@@ -2,7 +2,9 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}注册{% endblock %}
 {% block content %}
-{{super()}}
-{{wtf.quick_form(form2)}}
-{{wtf.quick_form(form)}}
+<div class="col-xs-12 col-md-3">
+    {{super()}}
+    {{wtf.quick_form(form2)}}
+    {{wtf.quick_form(form)}}
+</div>
 {% endblock %}

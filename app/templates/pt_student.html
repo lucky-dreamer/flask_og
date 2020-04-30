@@ -7,104 +7,102 @@
 {{moment.locale('zh-cn')}}    <!--设置时间中文语言显示-->
 {% endblock %}
 
-{% block content %}<!--div相当于一个盒子，用于模块的划分以及布局，一个div相当于一个模块。也可进行一层一层的嵌套-->
+{% block body %}     <!--div相当于一个盒子，用于模块的划分以及布局，一个div相当于一个模块。也可进行一层一层的嵌套-->
 {{super()}}
-<div class="container bg-info" style="width:100%">    <!--使用容器container统一装载以下元素方便应用背景以及样式 样式全部写到style中-->
-    <div style="float:left" class="col-xs-9 col-lg-11">  <!--这个模块向左漂移，在同一行之中。其他如果和他一行，必须设置相应的漂移进行布局，否则默认从下一行开始。（所有代码不设置漂移的话都是从上到下编写）-->
-        <h2>
-            &nbsp;内蒙古工业大学实践教学学生服务平台 <!--&nbsp;代表网页中显示的空格-->
-        </h2>
-        <p>
-            &nbsp;&nbsp;{{moment(current_time).format('LLLL')}}
-        </p>                             <!--渲染current_time并进行相应的编码，L的个数代表复杂程度-->
-    </div>
-    <div style="float:right" class="col-xs-3 col-lg-1">   <!--对应的右漂移，整个 大模块向右，其中的子模块从上到下填写-->
-        <p>
-            你好，{{current_user.name}}
-        </p>
-        <button class="btn btn-warning"> <!--bootstrap核心功能是它的多样的样式（class）这里用不同的class创建不同样式的按钮-->
-            <a href="{{url_for('auth.Change_File')}}" style=" color:white">
-                        修改资料
-                    </a>
-        </button><br>    <!--br代表回车换行-->
-        <button class="btn btn-danger">
-            <a href="{{url_for('auth.logout')}}" style=" color:white">
-                        退出登录
-                    </a>
-        </button>
-    </div>
-</div> <!--添加背景图片，图片路径为放置在static文件夹的路径，用url_for 函数调用系统已经建立好的默认的url映射，直接在static文件夹中找文件-->
-<div style="background-image:url('{{url_for('static',filename='cf.jpg')}}')">
-    <div>  <!--这个模块为左边的导航栏-->
-        <div class="dropdown" style="float:left"> <!--绑定一个dropdown的样式-->
-            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                选择导师        <!--先创建一个按钮，用来承载点击，设置按钮样式和下拉样式，通过data-toggle绑定下拉事件，调整一下宽度进行统一-->
-                <span class="caret"></span> <!--创建一个角标caret-->
-            </button>
-            <ul class="dropdown-menu">      <!--创建下拉列表，ul=unorder list,li=list item-->
-                <li>
-                    <a href="{{url_for('main.first_choice')}}" target="content">
-                        师生互选系统        <!--设置点击这里跳转的目标页面，同时通过target和name组合进行按钮触发与iframe里面页面的绑定-->
-                    </a>
-                </li>
-            </ul>
+<body style="background-image:url('{{url_for('static',filename='cf.jpg')}}')">
+    <div class="container bg-info" style="width:100%">    <!--使用容器container统一装载以下元素方便应用背景以及样式 样式全部写到style中-->
+        <div style="float:left" class="col-xs-9 col-lg-11">  <!--这个模块向左漂移，在同一行之中。其他如果和他一行，必须设置相应的漂移进行布局，否则默认从下一行开始。（所有代码不设置漂移的话都是从上到下编写）-->
+            <h2>
+                专业综合课程设计管理信息系统 <!--&nbsp;代表网页中显示的空格-->
+            </h2>
+            <p>
+                &nbsp;&nbsp;{{moment(current_time).format('LLLL')}}
+            </p>                             <!--渲染current_time并进行相应的编码，L的个数代表复杂程度-->
         </div>
-        <div class="dropdown" style="float:left">
-            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                说明书提交
-                <span class="caret"></span>
+        <div style="float:right" class="col-xs-3 col-lg-1">   <!--对应的右漂移，整个 大模块向右，其中的子模块从上到下填写-->
+            <p>
+                你好，{{current_user.name}}
+            </p>
+            <button class="btn btn-warning" onclick="window.location.href='{{url_for('auth.Change_File')}}'"> <!--bootstrap核心功能是它的多样的样式（class）这里用不同的class创建不同样式的按钮-->
+                            修改资料
+            </button><br>    <!--br代表回车换行-->
+            <button onclick="window.location.href='{{url_for('auth.logout')}}'" class="btn btn-danger">
+                            退出登录
             </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="{{url_for('main.up_file')}}" target="content">
-                        上传文件
-                    </a>
-                </li>
-            </ul>
         </div>
-        <div class="dropdown" style="float:left">
-            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                签到系统
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="{{url_for('main.sign_in')}}" target="content">
-                        开始签到
-                    </a>
-                </li>
-            </ul>
+    </div> <!--添加背景图片，图片路径为放置在static文件夹的路径，用url_for 函数调用系统已经建立好的默认的url映射，直接在static文件夹中找文件-->
+    <div>
+        <div>  <!--这个模块为左边的导航栏-->
+            <div class="dropdown" style="float:left"> <!--绑定一个dropdown的样式-->
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="width:103%">
+                    选择导师        <!--先创建一个按钮，用来承载点击，设置按钮样式和下拉样式，通过data-toggle绑定下拉事件，调整一下宽度进行统一-->
+                    <span class="caret"></span> <!--创建一个角标caret-->
+                </button>
+                <ul class="dropdown-menu">      <!--创建下拉列表，ul=unorder list,li=list item-->
+                    <li>
+                        <a href="{{url_for('main.first_choice')}}" target="content">
+                            师生互选系统        <!--设置点击这里跳转的目标页面，同时通过target和name组合进行按钮触发与iframe里面页面的绑定-->
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown" style="float:left">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="width:103%">
+                    说明书提交
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{url_for('main.up_file')}}" target="content">
+                            上传文件
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown" style="float:left">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="width:103%">
+                    签到系统
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{url_for('main.sign_in')}}" target="content">
+                            开始签到
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown" style="float:left">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="width:103%">
+                    沟通答疑
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{url_for('main.ask_question')}}" target="content">
+                            提问
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('main.my_question')}}" target="content">
+                            我的提问
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('main.questions')}}" target="content">
+                            问题汇总
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="dropdown" style="float:left">
-            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                沟通答疑
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="{{url_for('main.ask_question')}}" target="content">
-                        提问
-                    </a>
-                </li>
-                <li>
-                    <a href="{{url_for('main.my_question')}}" target="content">
-                        我的提问
-                    </a>
-                </li>
-                <li>
-                    <a href="{{url_for('main.questions')}}" target="content">
-                        问题汇总
-                    </a>
-                </li>
-            </ul>
+    <!--    <div style="float:left"> &lt;!&ndash;这里为了排版，添加几个空格，防止iframe页面与左边导航栏重叠冲突&ndash;&gt;-->
+    <!--        &nbsp;&nbsp;&nbsp;-->
+    <!--    </div>-->
+        <div style="width:100%">  <!--系统对于div而言，给定了一个默认的宽度，由于默认值太小，为了正确的显示，这里调整为100%-->
+            <iframe allowTransparency="true" name="content" frameborder="0" width="100%" height="450px" src="{{url_for('main.informs')}}">
+            </iframe> <!-- 内部框架，为了实现改变页面，框架内的内容更新而框架外的内容不更新-->
         </div>
     </div>
-<!--    <div style="float:left"> &lt;!&ndash;这里为了排版，添加几个空格，防止iframe页面与左边导航栏重叠冲突&ndash;&gt;-->
-<!--        &nbsp;&nbsp;&nbsp;-->
-<!--    </div>-->
-    <div style="width:100%">  <!--系统对于div而言，给定了一个默认的宽度，由于默认值太小，为了正确的显示，这里调整为100%-->
-        <iframe name="content" frameborder="0" width="100%" height="450px" src="{{url_for('main.informs')}}">
-        </iframe> <!-- 内部框架，为了实现改变页面，框架内的内容更新而框架外的内容不更新-->
-    </div>
-</div>
+</body>
 {% endblock %}

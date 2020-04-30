@@ -9,6 +9,9 @@ import uuid  # 生成随机码的库
 import time
 from datetime import datetime  # 数据库
 
+# 其实应该把学生和教师的基础数据抽离出来，这样教师和学生信息表有主键依赖，
+# 写删除操作的时候只要删除原始的表，后面依赖的表的信息就相应删除了。基本信息永远不会删，但是管理信息会删
+# 还是需要有管理员页面，防止教师在结束后没有点击结束按钮所带来的问题以及其他问题。
 
 class Student(db.Model, UserMixin):
         __tablename__ = 'tb_student'
@@ -20,12 +23,13 @@ class Student(db.Model, UserMixin):
         file_name=db.Column(db.String(64))  # 说明书的名字
         grade=db.Column(db.String(5))       # 学生成绩
         is_sign = db.Column(db.Integer,default=0)  # 学生的签到状态
-        sign_times=db.Column(db.Integer,default=0)  # 学生累计签到次数
+        personal_theme=db.Column(db.String(64))
+        # sign_times=db.Column(db.Integer,default=0)  # 学生累计签到次数
         teacher_id = db.Column(db.BigInteger, db.ForeignKey('tb_teacher.id'))  # 学生所属教师的id
         questions = db.relationship('Question', backref='student')
+        signs = db.relationship('Sign',backref='student')
 
 # 在多端加入外键，在一端加入关系
-
         @property
         def password(self):
             raise ArithmeticError('密码是不可访问的')
@@ -92,6 +96,11 @@ class Reply(db.Model, UserMixin):
     person = db.Column(db.String(5))
     question_id = db.Column(db.BigInteger, db.ForeignKey('tb_question.id'))
 
+
+class Sign(db.Model, UserMixin):
+    __tablename__ = 'tb_sign'
+    sign_time=db.Column(db.String(32),primary_key=True)
+    student_id = db.Column(db.BigInteger, db.ForeignKey('tb_student.id'))
 ####################################################################################
 #  下面是自己定义的函数
 

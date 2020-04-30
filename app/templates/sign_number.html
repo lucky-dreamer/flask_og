@@ -1,7 +1,11 @@
 {% extends "templates/flash.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}签到{% endblock %}
-{% block content %}
+{% block body %}
 {{super()}}
+<body style="background:none">
+<div class="col-xs-12 col-md-3">
 {{wtf.quick_form(form)}}
+</div>
+</body>
 {% endblock %}

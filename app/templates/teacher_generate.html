@@ -1,12 +1,14 @@
 {% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}我的课题简介{% endblock %}
-{% block content %}
+{% block body %}
 {{super()}}
+<body style="background:none">
 <p>说明：（1）选择模式为：教师进行课题简介-->学生初选-->教师筛选-->学生终选（初选时学生可以超过单个教师的课程容量，然后教师进行筛选，终选时不能超过）</p>
 <p>（2）请与进行课程设计的老师们进行讨论确定统一的教师选择时间和最终确定时间</p>
 {{wtf.quick_form(form)}}
 {{ ckeditor.load() }}
 {{ ckeditor.config(name='introduce')}}
+</body>
 {% endblock %}
 

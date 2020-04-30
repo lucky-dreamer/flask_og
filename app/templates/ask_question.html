@@ -3,9 +3,11 @@
 {% block title %}提问{% endblock %}
 {% block body %}
 {{super()}}
+<body style="background:none">
 {{wtf.quick_form(form)}}
 {{ ckeditor.load() }}
 {{ ckeditor.config(name='question')}}
+</body>
 {% endblock %}
 
 <!--上传图片搞了很久，原来开启ckeditor的原生scrf保护就不会报错，找不到错误原因可以用浏览器抓包分析-->

@@ -3,5 +3,7 @@
 {% block title %}修改密码{% endblock %}
 {% block content %}
 {{super()}}
+<div class="col-xs-12 col-md-3">
 {{wtf.quick_form(form)}}           <!--渲染表单-->
+</div>
 {% endblock %}

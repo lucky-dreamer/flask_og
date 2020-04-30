@@ -1,9 +1,10 @@
 {% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}上传公告{% endblock %}
-{% block content %}
+{% block body %}
 {{super()}}
-<p>我已经提交的说明书：{{f}}</p>
+<body style="background:none">
+<p>我已经提交的说明书：<a href="{{a}}">{% if f %}{{f}}{% else %}未上传{% endif %}</a></p>
 <form method="post" enctype="multipart/form-data"> <!--凡是文件上传都要设置这个属性-->
     {{form.hidden_tag()}}
     {{form.inform.label}}{{form.inform()}}
@@ -12,5 +13,5 @@
     {% endfor %}
     {{form.submit()}}
 </form>
-
+</body>
 {% endblock %}

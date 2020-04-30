@@ -1,7 +1,8 @@
 {% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
 {% block title %}学生的问题{% endblock %}
-{% block content %}
+{% block body %}
 {{super()}}
+<body style="background:none">
 <div>
     <ul>
         {% for i in lis %}
@@ -22,4 +23,5 @@
         {% endfor %}
     </ul>
 </div>
+</body>
 {% endblock %}

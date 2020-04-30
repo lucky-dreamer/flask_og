@@ -1,8 +1,9 @@
 {% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}我的课题简介{% endblock %}
-{% block content %}
+{% block body %}
 {{super()}}
+<body style="background:none">
 <div class="container" style="width:100%">
     <h2>{{theme}}</h2>
     <p style="float:left">简介：</p> {{introduce | safe}}   <!--在按钮中添加动作链接-->
@@ -11,4 +12,5 @@
     <p>最终确定时间：{{final_time}}</p>
     <button onclick="window.location.href='{{url_for('main.change')}}'">修改</button>
 </div>
+</body>
 {% endblock %}

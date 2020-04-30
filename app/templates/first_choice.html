@@ -1,9 +1,10 @@
 {% extends "templates/flash.html" %}
-{% block content %}
+{% block body %}
 {{super()}}
+<body style="background:none">
 <h4>你的指导教师为:{{teacher}}老师</h4>
 <p>说明：请在{{teacher_time}}之前完成初选，初选可以超过教师的课程容量</p>
-<p>说明：初选过后超过课程容量的老师带的学生会有一部分被踢出，请在{{final_time}}之前确保自己已经选上导师</p>
+<p>说明：初选过后超过课程容量的老师所带的学生会有一部分被筛选出，请在{{final_time}}之前确保自己已经选上导师</p>
 <table class="table">
     <thead>
         <tr>
@@ -34,4 +35,5 @@
         {% endfor %}
     </tbody>
 </table>
+</body>
 {% endblock %}

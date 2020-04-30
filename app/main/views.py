@@ -7,7 +7,7 @@ from ..email import send_email
 from flask_login import login_required
 from ..models import check_file
 from flask_login import current_user
-from ..models import Informs,Question,Student,Reply,Teacher
+from ..models import Informs,Question,Student,Reply,Teacher,Sign
 import os
 from .. import db
 import config
@@ -26,8 +26,8 @@ def first_choice():  # 这里的查询语句比较复杂，所以用pymysql会�
         teacher_time=current_user.teacher.teacher_time
         final_time=current_user.teacher.final_time
     else:
-        teacher_time='teacher_time'
-        final_time = 'final_time'
+        teacher_time='初选时间'
+        final_time = '最终确定时间'
     contented = []     # 用于存放最终的数据
     con = pymysql.connect(host='localhost',port=3306,user='root',password=os.environ.get('ps'),database='db_pw')  # 这里后期要改
     cursor=con.cursor()
@@ -46,7 +46,8 @@ def first_choice():  # 这里的查询语句比较复杂，所以用pymysql会�
         p.append(s)
         contented.append(p)   # 放入新的列表中
     try:
-        sql3='select tb_teacher.name from tb_student,tb_teacher where tb_teacher.id=tb_student.teacher_id and tb_student.teacher_id={}'.format(current_user.teacher_id)
+        sql3='select tb_teacher.name from tb_student,tb_teacher where tb_teacher.id=tb_student.teacher_id and ' \
+             'tb_student.teacher_id={}'.format(current_user.teacher_id)
         # 查询目前的教师，如果还没选的话就无
         cursor.execute(sql3)
         teacher = cursor.fetchall()[0][0]
@@ -80,13 +81,13 @@ def after_choice(id):     # 学生选择完之后进行相应的操作
     now = datetime.now()
     if now < teacher_time:    # 初选
         current_user.teacher_id = id   # 选完以后，存入相应的教师id
-        db.session.add(current_user)
+        current_user.personal_theme=current_user.teacher.theme
         db.session.commit()
         flash('选择成功')
     elif now > teacher_time:  # 终选
         if selected < contain:
             current_user.teacher_id = id  # 选完以后，存入相应的教师id
-            db.session.add(current_user)
+            current_user.personal_theme = current_user.teacher.theme
             db.session.commit()
             flash('选择成功')
         elif selected >= contain:
@@ -105,47 +106,56 @@ def informs():
 def up_file():
     form=FileForm()
     if form.validate_on_submit():
-        if current_user.file_url:
-            x = current_user.file_url.split('upfile/', 1)[1]  # 数据库中存的是完整的url，这里拿到文件名
-            path = os.path.join(config.Config.UPFILE_FOLDER, x)  # 再拼接成完整路径
-            os.remove(path)  # 删除
-            current_user.file_url='NULL'  # 同时在数据库中删除
-            current_user.file_name='NULL'
-            db.session.commit()
-        try:
-            file = form.inform.data  # 拿到文件
-            old_name = file.filename
-            if check_file(old_name):  # 验证以及改名字,改名字更安全，防止黑客攻击
-                filename = check_file(file.filename)
-                file.save(os.path.join(config.Config.UPFILE_FOLDER, filename))  # 保存
-                flash('上传成功')
-                session['file_url'] = url_for('main.openfile', filename=filename)
-                current_user.file_url=session.get('file_url')
-                current_user.file_name=old_name
+        if current_user.teacher is None:
+            flash('请先选择教师')
+        else:
+            if current_user.file_url:
+                x = current_user.file_url.split('upfile/', 1)[1]  # 数据库中存的是完整的url，这里拿到文件名
+                path = os.path.join(config.Config.UPFILE_FOLDER, x)  # 再拼接成完整路径
+                os.remove(path)  # 删除
+                current_user.file_url='NULL'  # 同时在数据库中删除
+                current_user.file_name='NULL'
                 db.session.commit()
-            else:
-                flash('文件名格式不正确')
-            return redirect(url_for('main.up_file'))
-        except:
-            flash('出现了未知错误')
-    return render_template('up_file.html', form=form,f=current_user.file_name)
+            try:
+                file = form.inform.data  # 拿到文件
+                old_name = file.filename
+                if check_file(old_name):  # 验证以及改名字,改名字更安全，防止黑客攻击
+                    filename = check_file(file.filename)
+                    file.save(os.path.join(config.Config.UPFILE_FOLDER, filename))  # 保存
+                    flash('上传成功')
+                    session['file_url'] = url_for('main.openfile', filename=filename)
+                    current_user.file_url=session.get('file_url')
+                    current_user.file_name=old_name
+                    db.session.commit()
+                else:
+                    flash('文件名格式不正确')
+                return redirect(url_for('main.up_file'))
+            except:
+                flash('出现了未知错误')
+    return render_template('up_file.html', form=form,f=current_user.file_name,a=current_user.file_url)
 
 
 @main.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
-    number = current_user.teacher.sign_number  # 查询现在的签到码
     form = StudentNumberForm()
-    if form.validate_on_submit():  # 学生提交签到码
-        if form.sign_number.data == number:  # 如果正确
-            if current_user.is_sign == 0:  # 并且是教师发起签到的首次提交
-                flash('签到成功')
-                current_user.sign_times += 1   # 学生自己的累计签到次数加一，如果一个学生签到很多次呢？？
-                current_user.is_sign += 1  # 学生签到的实时统计数据
-                db.session.commit()
+    if current_user.teacher is not None:
+        number = current_user.teacher.sign_number  # 查询现在的签到码
+        if form.validate_on_submit():  # 学生提交签到码
+            if form.sign_number.data == number:  # 如果正确
+                if current_user.is_sign == 0:  # 并且是教师发起签到的首次提交
+                    # current_user.sign_times += 1   # 学生自己的累计签到次数加一，如果一个学生签到很多次呢？？
+                    current_user.is_sign += 1  # 学生签到的实时统计数据
+                    gn=Sign(sign_time=datetime.now().strftime('%m-%d %H:%M:%S.%f'),
+                            student_id=current_user.id)
+                    db.session.add(gn)
+                    db.session.commit()
+                    flash('签到成功')
+                else:
+                    flash('你已经签到完成，请勿重复提交')
             else:
-                flash('你已经签到完成，请勿重复提交')
-        else:
-            flash('签到码错误')
+                flash('签到码错误')
+    else:
+        flash('你还未选择老师')
     return render_template('sign_in.html', form=form)
 
 
@@ -165,10 +175,13 @@ def ask_question():
 @main.route('/questions')
 def questions():  # 查看所有同组同学提过的问题以及老师的解答
     lis = []
-    for x in current_user.teacher.students:
-        for j in x.questions:
-            lis.append(j)
-    lis=lis[::-1]
+    if current_user.teacher is not None:
+        for x in current_user.teacher.students:
+            for j in x.questions:
+                lis.append(j)
+        lis=lis[::-1]
+    else:
+        flash('请先选择教师')
     return render_template('questions.html',lis=lis)
 
 
@@ -179,6 +192,13 @@ def my_question():   # 查看自己的提问
     return render_template('my_question.html',question=question)
 
 
+@main.route('/delete_question<id>')
+def delete_question(id):
+    s=Question.query.get(id)
+    db.session.delete(s)
+    db.session.commit()
+    return "<h4>删除成功</h4>"
+
 ####################################################################################
 
 
@@ -186,6 +206,11 @@ def my_question():   # 查看自己的提问
 @login_required
 def teacher():
     return render_template('pt_teacher.html', current_time=datetime.utcnow())
+
+
+@main.route('/teacher/first_content')
+def first_content():
+    return render_template("first_content.html")
 
 
 @main.route('/teacher/generate', methods=['GET', 'POST'])
@@ -198,6 +223,8 @@ def generate():
             current_user.theme = form.theme.data
             current_user.introduction = form.introduce.data
             current_user.contain = form.contain.data
+            current_user.teacher_time = form.teacher_time.data
+            current_user.final_time = form.final_time.data
             db.session.add(current_user)
             db.session.commit()
             return redirect(url_for('main.generated'))
@@ -251,19 +278,36 @@ def teacher_choice():
 # 登陆那块用orm比较多，主函数中pymysql多一点
 @main.route('/teacher/deletes/<id>', methods=['GET', 'POST'])  # 进行选择的操作
 def deletes(id):   # 传回学生id用于待会儿查询
+    for i in current_user.students:
+        if i.file_url is not None:
+            x = i.file_url.split('upfile/', 1)[1]  # 数据库中存的是完整的相对url，这里拿到文件名
+            path = os.path.join(config.Config.UPFILE_FOLDER, x)  # 再拼接成完整绝对路径
+            os.remove(path)
     con = pymysql.connect(host='localhost', port=3306, user='root', password=os.environ.get('ps'), database='db_pw')  # 这里后期要改
     cursor = con.cursor()
-    sql0='set FOREIGN_KEY_CHECKS=0'   # 这里要暂时关闭外键的约束才能进行相应的操作
-    sql1 = 'update tb_student set teacher_id=NULL where id={}'.format(int(id))
-    sql2 = 'set FOREIGN_KEY_CHECKS=1'
-    cursor.execute(sql0)
-    cursor.execute(sql1)
-    cursor.execute(sql2)
+    sql4 = "delete from tb_question where student_id={}".format(id)  # 删除问题表
+    sql5="update tb_student set teacher_id=NULL,file_url=NULL,file_name=NULL,grade=NULL" \
+         ",is_sign=0 where teacher_id={}".format(current_user.id)
+    cursor.execute(sql4)
+    cursor.execute(sql5)
     con.commit()   # 这里一定要记着提交更改到数据库
     cursor.close()
     con.close()
     flash('删除成功')
     return redirect(url_for('main.teacher_choice'))
+
+
+@main.route('/teacher/different_theme',methods=['GET','POST'])
+def different_theme():
+    students = current_user.students  # 加载学生说明书
+    if request.method == 'POST':  # 如果表单提交
+        for i in students:  # 通过键拿到输入分数，乘以相应的权重，再相加
+            p = request.form.get("{}".format(i.id))
+            i.personal_theme=p
+        db.session.commit()
+        flash('成功')
+        return redirect(url_for('main.teacher_choice'))
+    return render_template('different_theme.html', students=students)
 
 
 @main.route('/teacher/up_inform/',methods=['GET','POST'])
@@ -274,7 +318,7 @@ def up_inform():  # 上传公告
         old_name=file.filename
         if check_file(old_name):  # 验证以及改名字,改名字更安全，防止黑客攻击
             filename=check_file(file.filename)
-            file.save(os.path.join(config.Config.UPLOAD_FOLDER,filename))  # 保存
+            file.save(os.path.join(config.Config.UPFORM_FOLDER,filename))  # 保存
             flash('上传成功')
             session['file_url']=url_for('main.openform',filename=filename)
             inform=Informs(url=session.get('file_url'),
@@ -303,7 +347,7 @@ def my_informs():  # 教师查看公告内容
 @main.route('/teacher/delete_inform/<path:url>')   # 数据类型path表明传的是路径，可以包含/
 def delete_inform(url):  # 删除相应的公告
     x = url.split('uploads/',1)[1]    # 数据库中存的是url，这里拿到文件名
-    path = os.path.join(config.Config.UPLOAD_FOLDER, x)  # 再拼接成完整路径
+    path = os.path.join(config.Config.UPFORM_FOLDER, x)  # 再拼接成完整路径
     os.remove(path)  # 删除
     url = url.split(':', 1)[1]
     tr = Informs.query.filter_by(url=url).first()  # 同时在数据库中删除
@@ -375,6 +419,12 @@ def signed():
     return render_template('signed.html',students=students,number=number,p=now,contain=all_student)
 
 
+@main.route('/teacher/history_sign<id>')
+def history_sign(id):
+    info=Sign.query.filter_by(student_id=id).all()
+    return render_template('history_sign.html',info=info)
+
+
 @main.route('/teacher/questions_for_teacher')
 def questions_for_teacher():  # 教师查看自己学生的问题
     lis = []
@@ -402,6 +452,54 @@ def reply(id):  # 进行问题的回复，这里学生回复一样用这个视�
     return render_template('reply.html',form=form)
 
 
+@main.route('/teacher/is_ending')
+def is_ending():
+    return render_template('is_ending.html')
+
+
+# 图片就不设置删除管理了，到时候1年清理一次就可以。或者正则匹配源码中的图片，再删除？？
+@main.route('/teacher/ending_course')
+def ending_course():
+    con = pymysql.connect(host='localhost', port=3306, user='root', password=os.environ.get('ps'),
+                          database='db_pw')  # 这里后期要改
+    cursor = con.cursor()  # 先删文件，再删数据库
+    for j in current_user.informs:
+        if j.url is not None:
+            y = j.url.split('upform/', 1)[1]
+            paths = os.path.join(config.Config.UPFORM_FOLDER, y)
+            os.remove(paths)  # 删除通知
+    for i in current_user.students:
+        if i.file_url is not None:
+            x = i.file_url.split('upfile/', 1)[1]  # 数据库中存的是完整的相对url，这里拿到文件名
+            path = os.path.join(config.Config.UPFILE_FOLDER, x)  # 再拼接成完整绝对路径
+            os.remove(path)  # 删除说明书
+        # for m in i.questions:
+        #     sql3="delete from tb_reply where question_id={}".format(m.id)
+        #     cursor.execute(sql3)
+        #     con.commit()  # 删除回复表  删除问题表，回复表就会自动消失，外键约束
+        # cursor.close()
+        cursor=con.cursor()
+        sql4="delete from tb_question where student_id={}".format(i.id)  # 删除问题表
+        cursor.execute(sql4)
+        con.commit()
+    sql0 = "update tb_teacher set theme=NULL,introduction=NULL,contain=NULL,final_time=NULL,teacher_time=NULL" \
+           ",sign_number=NULL where name='{}'".format(current_user.name)
+
+    sql1="update tb_student set teacher_id=NULL,file_url=NULL,file_name=NULL,grade=NULL" \
+         ",sign_times=0,is_sign=0 where teacher_id={}".format(current_user.id)
+    sql2="delete from tb_inform where teacher_id={}".format(current_user.id)
+    cursor.execute(sql0)
+    cursor.execute(sql1)
+    cursor.execute(sql2)
+    con.commit()
+    cursor.close()
+    con.close()
+    return '<h1>成功</h1>'
+
+
+################################################################################################
+
+
 # 编写视图函数，调用函数进行邮件发送
 @main.route('/email', methods=['GET', 'POST'])
 def send_mail():
@@ -409,9 +507,9 @@ def send_mail():
     return '<h1>发送成功</h1>'
 
 
-@main.route('/uploads/<filename>')
+@main.route('/upform/<filename>')
 def openform(filename):        # 根据路径下载以及打开文件
-    return send_from_directory(config.Config.UPLOAD_FOLDER,filename=filename)
+    return send_from_directory(config.Config.UPFORM_FOLDER,filename=filename)
 
 
 @main.route('/upfile/<filename>')

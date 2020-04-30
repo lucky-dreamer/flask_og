@@ -1,7 +1,8 @@
 {% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
 {% block title %}学生的问题{% endblock %}
-{% block content %}
+{% block body %}
 {{super()}}
+<body style="background:none">
 <div>
     <ul>
         {% for i in lis %} <!--循环访问每一个问题-->
@@ -9,6 +10,7 @@
                 <div class="panel-success">
                     <div class="panel-body">
                         <p>{{i.student.name}}&nbsp;<{{i.time}}>:</p>
+                        <button style="float:right" onclick="window.location.href='{{url_for('main.delete_question',id=i.id)}}'">删除问题</button>
                         {{i.content | safe}}
                     </div>
                     <div class="panel-footer">
@@ -23,4 +25,5 @@
         {% endfor %}
     </ul>
 </div>
+</body>
 {% endblock %}

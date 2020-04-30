@@ -1,17 +1,14 @@
 {% extends "templates/flash.html" %}
-{% block title %}成绩{% endblock %}
+{% block title %}题目{% endblock %}
 {% block body %}
 {{super()}}
 <body style="background:none">
-<form method="post" action="{{url_for('main.math_grade',_external=True)}}">
+<form method="post" action="{{url_for('main.different_theme',_external=True)}}">
     <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
     <table class="table">
         <thead>
             <th>姓名</th>
-            <th>说明书</th>
-            <th>平时成绩({% if daily %}{{daily}}{% else %}&nbsp;{% endif %})</th>
-            <th>答辩成绩({% if answer %}{{answer}}{% else %}&nbsp;{% endif %})</th>
-            <th>说明书成绩({% if final %}{{final}}{% else %}&nbsp;{% endif %})</th>
+            <th>课题</th>
         </thead>
         <tbody>                                  <!--可以用嵌套循环实现！-->
             {% for i in students %}
@@ -20,21 +17,13 @@
                         <p>{{i.name}}</p>
                     </td>
                     <td>
-                        <a href="{{i.file_url}}">{{i.file_name}}</a>
-                    </td>
-                    <td>
                         <input name="{{i.id}}" required> <!--通过属性来作为特殊值命名，方便命名                   </td>-->
-                    <td>
-                        <input name="{{i.name}}" required>
-                    </td>
-                    <td>
-                        <input name="{{i.file_name}}" required>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <button type="submit">计算</button>
+    <button type="submit">完成</button>
 </form>
 </body>
 {% endblock %}

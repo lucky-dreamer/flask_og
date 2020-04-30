@@ -1,8 +1,9 @@
 {% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}上传公告{% endblock %}
-{% block content %}
+{% block body %}
 {{super()}}
+<body style="background:none">
 <form method="post" enctype="multipart/form-data"> <!--凡是文件上传都要设置这个属性-->
     {{form.hidden_tag()}}
     {{form.inform.label}}{{form.inform()}}
@@ -12,4 +13,5 @@
     {{form.submit()}}
 </form>
 <a href="{{url_for('main.my_informs')}}">我的公告X</a>  <!--最新上传的url,先放在这儿，后期文件上传借鉴-->
+</body>
 {% endblock %}

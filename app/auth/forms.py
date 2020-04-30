@@ -10,7 +10,7 @@ class LoginForm(FlaskForm):                            # 定义表单类.
     old_pw = PasswordField('密码', validators=[DataRequired(),
                            Regexp('^(?![0-9]+$)(?![a-zA-Z]+$)[a-zA-Z0-9]{8,16}$')])  # 8到16位的数字字母组合
     role = SelectField(label='角色', validators=[DataRequired()], choices=[(1, '学生'), (2, '教师')], coerce=int)
-    remenber_me=BooleanField('记住登陆状态')
+    remember_me=BooleanField('记住登陆状态')
     submit = SubmitField('登陆')
 
 

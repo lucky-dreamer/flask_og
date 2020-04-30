@@ -1,0 +1,26 @@
+{% extends "templates/flash.html" %}
+{% block body %}
+{{super()}}
+<body style="background:none">
+<table class="table">
+    <thead>
+        <tr>
+            <th>姓名</th>
+            <th>签到时间</th>
+        </tr>
+    </thead>
+    <tbody>                                  <!--可以用嵌套循环实现！-->
+        {% for i in info %}
+            <tr>
+                <td>
+                    {{i.student.name}}
+                </td>
+                <td>
+                    {{i.sign_time}}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+{% endblock %}

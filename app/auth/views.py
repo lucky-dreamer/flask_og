@@ -17,7 +17,7 @@ def login():
         if form.role.data==1:
             student=Student.query.filter_by(id=form.id.data).first()    # 查找id所对应的对象
             if student is not None and student.verify_password(form.old_pw.data):
-                login_user(student, form.remenber_me.data)
+                login_user(student, form.remember_me.data)
                 next = request.args.get(
                     'next')  # 引用next 参数来辅助判断，查询字符串保存到当中，如果是原来字符串，则说明数据库中没有该角色，不能登陆，如果变了，则访问了首页，能标记登陆
                 if next is None or not next.startswith('/'):
@@ -26,7 +26,7 @@ def login():
         elif form.role.data==2:
             teacher = Teacher.query.filter_by(id=form.id.data).first()
             if teacher is not None and teacher.verify_password(form.old_pw.data): # 如果对象存在且密码正确
-                login_user(teacher,form.remenber_me.data)        # 把用户标记为以登陆，同时是否记住，从这里开始就可以用current_user来操作
+                login_user(teacher,form.remember_me.data)        # 把用户标记为以登陆，同时是否记住，从这里开始就可以用current_user来操作
                 next=request.args.get('next')                 # 引用next 参数来辅助判断，查询字符串保存到当中，如果是原来字符串，则说明数据库中没有该角色，不能登陆，如果变了，则访问了首页，能标记登陆
                 if next is None or not next.startswith('/teacher'):
                     next=url_for('main.teacher')

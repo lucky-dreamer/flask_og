@@ -1,0 +1,12 @@
+{% extends "templates/flash.html" %}
+{% block title %}是否结束课程{% endblock %}
+{% block body %}
+{{super()}}
+<body style="background:none">
+<div>
+    <h1 class="danger">是否结束课程设计？</h1>
+    <h3>注意，此操作会删除所有课题以及学生信息，应当在一门课程设计全部结束后进行操作！</h3>
+    <button onclick="window.location.href='{{url_for('main.ending_course')}}'">结束</button>
+</div>
+</body>
+{% endblock %}

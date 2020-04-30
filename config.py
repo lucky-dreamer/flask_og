@@ -13,7 +13,7 @@ class Config:                       # 基类配置
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_USERNAME')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    UPLOAD_FOLDER = 'G:/flask_og/app/static/upform'
+    UPFORM_FOLDER = 'G:/flask_og/app/static/upform'
     UPFILE_FOLDER = 'G:/flask_og/app/static/upfile'
     ALLOWED_EXTENSIONS = set(['txt','docx','doc'])
     MAX_CONTENT_LENGTH = 16*1024*1024
