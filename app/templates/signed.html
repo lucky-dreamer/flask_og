@@ -2,7 +2,10 @@
 {% block body %}
 {{super()}}
 <body style="background:none">
+<div>
+<button style="float:right" class="btn btn-default" onclick="window.location.href='{{url_for('main.end_sign')}}'">结束签到</button>
 <p>我的签到码：{{number}}</p>
+</div>
 <p>已签到人数：{{p}}/{{contain}}</p>
 <p>状态：<a href="{{url_for('main.signed')}}">刷新</a></p>
 <table class="table">

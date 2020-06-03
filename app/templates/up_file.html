@@ -4,7 +4,7 @@
 {% block body %}
 {{super()}}
 <body style="background:none">
-<p>我已经提交的说明书：<a href="{{a}}">{% if f %}{{f}}{% else %}未上传{% endif %}</a></p>
+<p>我已经提交的说明书：<a href="{{file.file_url}}">{% if file.file_name %}{{file.file_name}}{% else %}未上传{% endif %}</a></p>
 <form method="post" enctype="multipart/form-data"> <!--凡是文件上传都要设置这个属性-->
     {{form.hidden_tag()}}
     {{form.inform.label}}{{form.inform()}}

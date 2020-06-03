@@ -1,0 +1,36 @@
+{% extends "templates/flash.html" %}
+{% block body %}
+{{super()}}
+<body style="background:none">
+<form method="post" enctype="multipart/form-data" action="{{url_for('main.up_mission',_external=True)}}">
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+    <table class="table">
+        <thead>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>题目</th>
+            <th>上传文件</th>
+        </thead>
+        <tbody>                                  <!--可以用嵌套循环实现！-->
+            {% for i in content %}
+                <tr>
+                    <td>
+                        {{i.id}}
+                    </td>
+                    <td>
+                        {{i.name}}
+                    </td>
+                    <td>
+                        {{i.personal_theme}}
+                    </td>
+                    <td>
+                        <input type="file" name="{{i.id}}" required>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit">上传</button>
+</form>
+</body>
+{% endblock %}

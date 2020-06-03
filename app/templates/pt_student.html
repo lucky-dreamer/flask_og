@@ -1,6 +1,6 @@
 {% extends "templates/flash.html" %}<!--使用扩展来继承的话，直接用就可以了，不用再引用样式-->
 
-{% block title %}内蒙古工业大学实践教学管理平台{% endblock %}
+{% block title %}专业综合课程设计管理信息系统{% endblock %}
 {% block scripts %}      <!--继承基模版中原始的定义内容-->
 {{super()}}
 {{moment.include_moment()}}  <!--引入moment.js库-->
@@ -48,19 +48,6 @@
             </div>
             <div class="dropdown" style="float:left">
                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="width:103%">
-                    说明书提交
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="{{url_for('main.up_file')}}" target="content">
-                            上传文件
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="dropdown" style="float:left">
-                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="width:103%">
                     签到系统
                     <span class="caret"></span>
                 </button>
@@ -91,6 +78,19 @@
                     <li>
                         <a href="{{url_for('main.questions')}}" target="content">
                             问题汇总
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown" style="float:left">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="width:103%">
+                    说明书提交
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{url_for('main.up_file')}}" target="content">
+                            上传文件
                         </a>
                     </li>
                 </ul>

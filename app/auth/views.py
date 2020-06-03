@@ -23,15 +23,16 @@ def login():
                 if next is None or not next.startswith('/'):
                     next = url_for('main.index')
                 return redirect(next)
+            flash('不合法的用户名或密码')
         elif form.role.data==2:
             teacher = Teacher.query.filter_by(id=form.id.data).first()
             if teacher is not None and teacher.verify_password(form.old_pw.data): # 如果对象存在且密码正确
                 login_user(teacher,form.remember_me.data)        # 把用户标记为以登陆，同时是否记住，从这里开始就可以用current_user来操作
-                next=request.args.get('next')                 # 引用next 参数来辅助判断，查询字符串保存到当中，如果是原来字符串，则说明数据库中没有该角色，不能登陆，如果变了，则访问了首页，能标记登陆
-                if next is None or not next.startswith('/teacher'):
-                    next=url_for('main.teacher')
-                return redirect(next)
-        flash('不合法的用户名或密码')
+                next=request.args.get('next')        # 引用next 参数来辅助判断，查询字符串保存到当中，如果是原来字符串，则说明数据库中没有该角色，不能登陆，如果变了，则访问了首页，能标记登陆
+                if next is None or not next.startswith('/'):
+                    next=url_for('main.index')
+                return redirect(next)  # 只能有一个首页（根路由），否则会因为”next“参数而产生错误，具体的页面返回在这个根路由里面处理
+            flash('不合法的用户名或密码')
     return render_template('auth/login.html',form=form)
 
 
@@ -88,6 +89,7 @@ def register():
 
 
 @auth.route('/Change_File', methods=['POST', 'GET'])
+@login_required
 def Change_File():                                       # 改密码提交的相关表单
     form = ChangeFile_Form()
     if form.validate_on_submit():               # 利用ccurrent_user 可以很方便的管理各种属性
@@ -118,7 +120,7 @@ def forget_password():         # 忘记密码可以凭借学号，通过查询�
                 p = check_number(session.get('code'), phone)
                 flash(p)
             else:
-                flash('您输入的手机号有误')
+                flash('您输入的账号有误')
         elif session.get('role')==2:
             user=Teacher.query.filter_by(id=session.get('id')).first()
             if user is not None:
@@ -126,7 +128,7 @@ def forget_password():         # 忘记密码可以凭借学号，通过查询�
                 p = check_number(session.get('code'), phone)
                 flash(p)
             else:
-                flash('您输入的手机号有误')
+                flash('您输入的账号有误')
     elif form.validate_on_submit():    # 改的操作，先获取对象，再进行相应属性的改变，然后提交
         code2 = form.code.data
         if code2 == session.get('code'):

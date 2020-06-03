@@ -6,18 +6,25 @@
 <div>
     <table class="table">
         <thead>
-            <th>公告栏</th>
+            <th>公告</th>
+            <th>发布时间</th>
         </thead>
         <tbody>
            {% for i in inform %}
                 <tr>
                     <td>
-                        <a class="h4" href="{{i.url}}">{{i.title}}</a>
+                        <a href="{{i.url}}">{{i.title}}</a>
+                    </td>
+                    <td>
+                        <p>{{i.time}}</p>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <div>
+        <p>我的任务书：<a href="{{file.mission_url}}">{% if file.mission_name %}{{file.mission_name}}{% else %}未上传{% endif %}</a></p>
+    </div>
 </div>
 </body>
 {% endblock %}

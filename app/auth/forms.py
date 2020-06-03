@@ -5,6 +5,7 @@ from ..models import Student,Teacher
 
 # 跟登陆相关的各种表单类
 
+
 class LoginForm(FlaskForm):                            # 定义表单类.
     id=IntegerField('学号',validators=[DataRequired(),NumberRange(0,999999999999999)])
     old_pw = PasswordField('密码', validators=[DataRequired(),

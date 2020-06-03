@@ -20,15 +20,15 @@
                         <p>{{i.name}}</p>
                     </td>
                     <td>
-                        <a href="{{i.file_url}}">{{i.file_name}}</a>
+                        <a href="{{i.file.file_url}}">{% if i.file.file_name %}{{i.file.file_name}}{% else %}未上传{% endif %}</a>
                     </td>
                     <td>
                         <input name="{{i.id}}" required> <!--通过属性来作为特殊值命名，方便命名                   </td>-->
                     <td>
-                        <input name="{{i.name}}" required>
+                        <input name="{{i.id}}a" required>
                     </td>
                     <td>
-                        <input name="{{i.file_name}}" required>
+                        <input name="{{i.id}}b" required>
                     </td>
                 </tr>
             {% endfor %}

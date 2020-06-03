@@ -6,13 +6,17 @@
 <div>
     <table class="table">
         <thead>
-            <th>公告栏</th>
+            <th>公告</th>
+            <th>发布时间</th>
         </thead>
         <tbody>
            {% for i in inform %}
                 <tr>
+                   <td>
+                        <a href="{{i.url}}">{{i.title}}</a>
+                    </td>
                     <td>
-                        <a class="h4" href="{{i.url}}">{{i.title}}</a>
+                        <p>{{i.time}}</p>
                     </td>
                     <td>
                         <button onclick="window.location.href='{{url_for('main.delete_inform',url=li[i])}}'">删除</button>

@@ -13,20 +13,20 @@ from datetime import datetime  # 数据库
 # 写删除操作的时候只要删除原始的表，后面依赖的表的信息就相应删除了。基本信息永远不会删，但是管理信息会删
 # 还是需要有管理员页面，防止教师在结束后没有点击结束按钮所带来的问题以及其他问题。
 
+
 class Student(db.Model, UserMixin):
         __tablename__ = 'tb_student'
         id = db.Column(db.BigInteger, primary_key=True)  # 账号（写学号）
         name = db.Column(db.String(5))                    # 真实姓名
         phone = db.Column(db.String(64))  # 手机号
         hash_password = db.Column(db.String(128), nullable=False)  # 密码
-        file_url=db.Column(db.String(128))  # 说明书文件的链接
-        file_name=db.Column(db.String(64))  # 说明书的名字
         grade=db.Column(db.String(5))       # 学生成绩
         is_sign = db.Column(db.Integer,default=0)  # 学生的签到状态
         personal_theme=db.Column(db.String(64))
         # sign_times=db.Column(db.Integer,default=0)  # 学生累计签到次数
         teacher_id = db.Column(db.BigInteger, db.ForeignKey('tb_teacher.id'))  # 学生所属教师的id
         questions = db.relationship('Question', backref='student')
+        file = db.relationship('Files', backref='student',uselist=False)
         signs = db.relationship('Sign',backref='student')
 
 # 在多端加入外键，在一端加入关系
@@ -42,6 +42,15 @@ class Student(db.Model, UserMixin):
             return check_password_hash(self.hash_password, password)
 
 
+class Files(db.Model, UserMixin):
+    __tablename__ = 'tb_file'
+    id = db.Column(db.BigInteger, primary_key=True)
+    mission_url = db.Column(db.String(128))
+    mission_name = db.Column(db.String(64))
+    file_url = db.Column(db.String(128))  # 说明书文件的链接
+    file_name = db.Column(db.String(64))
+    student_id = db.Column(db.BigInteger, db.ForeignKey('tb_student.id'))
+
 
 class Teacher(db.Model, UserMixin):
     __tablename__ = 'tb_teacher'
@@ -49,16 +58,12 @@ class Teacher(db.Model, UserMixin):
     name = db.Column(db.String(5))  # 真实姓名
     phone = db.Column(db.String(64))  # 教师电话
     hash_password = db.Column(db.String(128), nullable=False)  # 密码
-    theme = db.Column(db.String(64),nullable=True)  # 教师课题主题
-    introduction = db.Column(db.Text(1000),nullable=True)  # 教师课题简介
-    contain = db.Column(db.Integer)  # 教师的课程容量
     students = db.relationship('Student', backref='teacher')  # 学生的老师，老师的学生们直接用关系来访问
     informs = db.relationship('Informs', backref='teacher')  # 与公告的关系
-    teacher_time = db.Column(db.String(16))  # 教师选择时间
-    final_time = db.Column(db.String(16))  # 教师设置的最终选择时间
+    course = db.relationship('Course', backref='teacher',uselist=False)
     sign_number= db.Column(db.String(4))  # 教师生成的签到码
-    # role_id = db.Column(db.BigInteger, db.ForeignKey('tb_role.id'))
-    # 在多端加入外键，在一端加入关系
+    is_open_sign=db.Column(db.Integer,default=0)
+    # 在多端加入外键，在一端加入关系。
 
     @property
     def password(self):
@@ -72,10 +77,23 @@ class Teacher(db.Model, UserMixin):
         return check_password_hash(self.hash_password, password)
 
 
+class Course(db.Model, UserMixin):
+    __tablename__ = 'tb_course'
+    id = db.Column(db.BigInteger, primary_key=True)
+    theme = db.Column(db.String(64), nullable=True)  # 教师课题主题
+    introduction = db.Column(db.Text(1000), nullable=True)  # 教师课题简介
+    contain = db.Column(db.Integer)  # 教师的课程容量
+    teacher_time = db.Column(db.String(16))  # 教师选择时间
+    final_time = db.Column(db.String(16))  # 教师设置的最终选择时间
+    teacher_id = db.Column(db.BigInteger, db.ForeignKey('tb_teacher.id'))
+
+
+
 class Informs(db.Model, UserMixin):
     __tablename__='tb_inform'
     title = db.Column(db.String(64))  # 通知的标题（文件名）
     url=db.Column(db.String(128),primary_key=True)  # 通知的链接
+    time=db.Column(db.String(20))
     teacher_id = db.Column(db.BigInteger, db.ForeignKey('tb_teacher.id'))  # 教师的id作为这个表的外键
 
 
@@ -109,21 +127,21 @@ class Sign(db.Model, UserMixin):
 def load_user(user_id):
     if int(user_id) > 99999999999:
         return Student.query.get(int(user_id))
-    elif int(user_id) < 99999999999:
+    elif int(user_id) <= 99999999999:
         return Teacher.query.get(int(user_id))
 
 
 def return_user_page(user_id):               # 定义一个方法，用于判断是老师还是学生，从而返回相应的首页
     if int(user_id) > 99999999999:
         return redirect(url_for('main.index'))
-    elif int(user_id) < 99999999999:
+    elif int(user_id) <= 99999999999:
         return redirect(url_for('main.teacher'))
 
 # datetime 本身支持比较大小
 # def compare_time(teacher_time,final_time):
 
 
-def check_file(filename):  #首先判断他的文件名正确，然后改名字，保存
+def check_file(filename):  # 首先判断他的文件名正确，然后改名字，保存
     if '.' in filename and filename.rsplit('.',1)[1] in config.Config.ALLOWED_EXTENSIONS:
         ext=os.path.splitext(filename)[1]
         new_filename = uuid.uuid4().hex+ext
