@@ -6,6 +6,8 @@ from flask import redirect,url_for
 import config
 import os
 import uuid  # 生成随机码的库
+import pymysql
+import functools
 import time
 from datetime import datetime  # 数据库
 
@@ -18,7 +20,7 @@ class Student(db.Model, UserMixin):
         __tablename__ = 'tb_student'
         id = db.Column(db.BigInteger, primary_key=True)  # 账号（写学号）
         name = db.Column(db.String(5))                    # 真实姓名
-        phone = db.Column(db.String(64))  # 手机号
+        phone = db.Column(db.String(64))  # 手机号,unique=True
         hash_password = db.Column(db.String(128), nullable=False)  # 密码
         grade=db.Column(db.String(5))       # 学生成绩
         is_sign = db.Column(db.Integer,default=0)  # 学生的签到状态
@@ -56,7 +58,7 @@ class Teacher(db.Model, UserMixin):
     __tablename__ = 'tb_teacher'
     id = db.Column(db.BigInteger, primary_key=True)  # 账号（写学号）
     name = db.Column(db.String(5))  # 真实姓名
-    phone = db.Column(db.String(64))  # 教师电话
+    phone = db.Column(db.String(64))  # 教师电话,unique=True
     hash_password = db.Column(db.String(128), nullable=False)  # 密码
     students = db.relationship('Student', backref='teacher')  # 学生的老师，老师的学生们直接用关系来访问
     informs = db.relationship('Informs', backref='teacher')  # 与公告的关系
@@ -150,10 +152,35 @@ def check_file(filename):  # 首先判断他的文件名正确，然后改名字
         return None
 
 
+def connect():  # 链接数据库的操作封装
+    con = pymysql.connect(host='127.0.0.1', port=3306, user='root', password=os.environ.get('ps'),
+                          database='db_pw')
+    cursor = con.cursor()
+    return con,cursor
+
+
+def connection(func):
+    @functools.wraps(func)
+    def inner(*args,**kwargs):  # *args表示位置参数(以(a,b,...)的形式传入的元组)，**kwargs表示关键字参数（(以a=1,b=2)形式传入的字典）
+        con = pymysql.connect(host='127.0.0.1', port=3306, user='root', password=os.environ.get('ps'),
+                              database='db_pw')  # *args为必选参数，**kwargs为可选参数
+        cursor = con.cursor()
+        res = func(cursor,**kwargs)  # 先传入cursor,另外一个用**kwargs占位，等下一个装饰器传入。
+        cursor.close()
+        con.commit()
+        con.close()
+        return res
+    return inner  # 开头结尾都不用自己写，只用写核心执行逻辑
 
 
 
-
+def math_timel(func):  # 装饰器本质对被装饰的函数进行处理，返回增强功能后的函数
+    def inner(*args):
+        print('123')
+        res=func(*args)
+        print('456')
+        return res
+    return inner
 
 
 # class Role(db.Model):

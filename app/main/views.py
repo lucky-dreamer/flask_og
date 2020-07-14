@@ -5,7 +5,7 @@ from .forms import generate_introduce_Form, Inform, FileForm, GradePowerForm, Si
 import pymysql
 from ..email import send_email
 from flask_login import login_required
-from ..models import check_file
+from ..models import check_file,math_timel,connection
 from flask_login import current_user
 from ..models import Informs,Question,Student,Reply,Teacher,Sign,Files,Course
 import os
@@ -23,7 +23,8 @@ def index():                           # 这里同时引入时间变量，传入
 
 
 @main.route('/first_choice')  # 学生选择
-def first_choice():  # 这里的查询语句比较复杂，所以用pymysql会更灵活一些
+@connection
+def first_choice(cursor):  # 这里的查询语句比较复杂，所以用pymysql会更灵活一些
     if current_user.teacher_id is not None:   # 时间的渲染
         if datetime.now() > datetime.strptime(current_user.teacher.course.final_time, '%Y-%m-%d'):  # 如果是空，看得到选不进，如果是非空，看不到其他教师的界面
             return "<p>您已选择{}教师，已经结束选教阶段，不可更改</p>".format(current_user.teacher)
@@ -33,14 +34,10 @@ def first_choice():  # 这里的查询语句比较复杂，所以用pymysql会�
         teacher_time='初选时间'
         final_time = '最终确定时间'
     contented = []     # 用于存放最终的数据
-    con = pymysql.connect(host='127.0.0.1',port=3306,user='root',password=os.environ.get('ps'),database='db_pw')  # 这里后期要改
-    cursor=con.cursor()
     sql1 = 'select teacher_id,name,theme,contain from tb_teacher,tb_course where tb_teacher.id=tb_course.teacher_id' \
            ' and introduction is not NULL'
     cursor.execute(sql1)  # 从教师表中查询的数据
     content=cursor.fetchall()
-    cursor.close()
-    cursor = con.cursor()
     for x in content:
         p=list(x)   # 转化为列表方便增加元素
         sql2 = 'select count(tb_student.teacher_id) from ' \
@@ -55,8 +52,6 @@ def first_choice():  # 这里的查询语句比较复杂，所以用pymysql会�
         teacher = current_user.teacher.name
     except:
         teacher = '还未选择'
-    cursor.close()
-    con.close()
     return render_template('first_choice.html', contented=contented,teacher=teacher,teacher_time=teacher_time,final_time=final_time)
 
 
@@ -67,16 +62,15 @@ def introduces(id):
     return render_template('introduce.html',introduction=introduction)
 
 
-@main.route('/after_choice/<id>')  # !
+ # 它本身是个可接受参数的装饰器
+
+@main.route('/after_choice/<id>')
+@connection
 @login_required
-def after_choice(id):     # 学生选择完之后进行相应的操作
-    con = pymysql.connect(host='127.0.0.1', port=3306, user='root', password=os.environ.get('ps'), database='db_pw')  # 这里后期要改
-    cursor = con.cursor()
+def after_choice(cursor,id):     # 学生选择完之后进行相应的操作
     sql1 = 'select count(teacher_id) from tb_teacher,tb_student where tb_student.teacher_id=tb_teacher.id and tb_teacher.id={}'.format(id)
     cursor.execute(sql1)
     data = cursor.fetchone()
-    cursor.close()
-    con.close()
     selected = data[0]  # 这里在数据库中拿出选择人数，课程容量，时间等
     course = Course.query.filter_by(teacher_id=id).first()
     contain=course.contain
@@ -137,7 +131,7 @@ def up_file():
                                student_id=current_user.id)
                     db.session.add(ct)
                     db.session.commit()
-                    flash('上传成功') # 有则改之，无则插入
+                    flash('上传成功')  # 有则改之，无则插入
             else:
                 flash('文件名不正确')
     return render_template('up_file.html', form=form,file=current_user.file)
@@ -275,24 +269,22 @@ def change():                # 比生成少一个判断
 
 
 @main.route('/teacher/teacher_choice')  # 教师选择
+@connection
 @login_required
-def teacher_choice():  # 重点！把localhost改成127.以后，速度快了很多，原因是localhost需要解析，而127.不需要
-    con = pymysql.connect(host='127.0.0.1', port=3306, user='root',
-                          password=os.environ.get('ps'), database='db_pw')  # 这里后期要改
-    cursor = con.cursor()
+def teacher_choice(cursor):  # 重点！把localhost改成127.以后，速度快了很多，原因是localhost需要解析，而127.不需要
     sql1 = 'select count(teacher_id) from tb_teacher,tb_student where' \
            ' tb_student.teacher_id=tb_teacher.id and tb_teacher.id={}'.format(current_user.id)
     cursor.execute(sql1)
     selected=cursor.fetchone()[0]  # 直接用current_user.students.count()不知道为啥会报错，所以这里用pymysql
     cursor.close()
-    con.close()
     return render_template('teacher_choice.html',selected=selected)
 
 
 # 登陆那块用orm比较多，主函数中pymysql多一点
 @main.route('/teacher/deletes/<id>', methods=['GET', 'POST'])  # 进行选择的操作
+@connection
 @login_required
-def deletes(id):   # 传回学生id用于待会儿查询
+def deletes(cursor,id):   # 传回学生id用于待会儿查询
     p=Files.query.filter_by(student_id=id).first()
     if p is not None:
         if p.file_url is not None:
@@ -303,8 +295,6 @@ def deletes(id):   # 传回学生id用于待会儿查询
             x = p.mission_url.split('upfile/', 1)[1]  # 数据库中存的是完整的相对url，这里拿到文件名
             path = os.path.join(config.Config.UPFILE_FOLDER, x)  # 再拼接成完整绝对路径
             os.remove(path)
-    con = pymysql.connect(host='127.0.0.1', port=3306, user='root', password=os.environ.get('ps'), database='db_pw')  # 这里后期要改
-    cursor = con.cursor()
     sql0 = "delete from tb_file where student_id={}".format(
         id)
     sql1 = "delete from tb_sign where student_id={}".format(id)
@@ -318,9 +308,6 @@ def deletes(id):   # 传回学生id用于待会儿查询
     cursor.execute(sql3)
     cursor.execute(sql4)
     cursor.execute(sql5)
-    con.commit()   # 这里一定要记着提交更改到数据库
-    cursor.close()
-    con.close()
     flash('删除成功')
     return redirect(url_for('main.teacher_choice'))
 
@@ -540,11 +527,9 @@ def is_ending():
 
 # 图片就不设置删除管理了，到时候1年清理一次就可以。或者正则匹配源码中的图片，再删除？？
 @main.route('/teacher/ending_course')
+@connection
 @login_required
-def ending_course():
-    con = pymysql.connect(host='127.0.0.1', port=3306, user='root', password=os.environ.get('ps'),
-                          database='db_pw')  # 这里后期要改
-    cursor = con.cursor()  # 先删文件，再删数据库
+def ending_course(cursor):
     for j in current_user.informs:
         if j.url is not None:
             y = j.url.split('upform/', 1)[1]
@@ -561,14 +546,10 @@ def ending_course():
                 path = os.path.join(config.Config.UPFILE_FOLDER, x)  # 再拼接成完整绝对路径
                 os.remove(path)  # 删除任务书
         for m in i.questions:
-            sql3="delete from tb_reply where question_id={}".format(m.id)
-            cursor.execute(sql3)
-            con.commit()  # 删除回复表
-        cursor.close()
-        cursor=con.cursor()
-        sql4="delete from tb_question where student_id={}".format(i.id)  # 删除问题表
-        cursor.execute(sql4)
-        con.commit()
+            sql6="delete from tb_reply where question_id={}".format(m.id)
+            cursor.execute(sql6)  # 删除回复表
+        sql5="delete from tb_question where student_id={}".format(i.id)  # 删除问题表
+        cursor.execute(sql5)
     sql0 = "delete from tb_course where teacher_id='{}'".format(current_user.id)
     sql1 = "delete from tb_file where tb_file.student_id in(select tb_student.id from tb_student,tb_teacher " \
            "where tb_student.teacher_id=tb_teacher.id and tb_student.teacher_id={})".format(current_user.id)
@@ -583,9 +564,6 @@ def ending_course():
     cursor.execute(sql2)
     cursor.execute(sql3)
     cursor.execute(sql4)
-    con.commit()
-    cursor.close()
-    con.close()
     return '<h1>成功</h1>'
 
 # 签到归零

@@ -7,7 +7,7 @@ def check_number(code,phone):
     host = 'https://smsmsgs.market.alicloudapi.com'
     path = '/sms/'
     appcode = '6f3fa56e4a6745d98cc02c351610981b'
-    querys = 'code='+str(code)+'&phone='+phone+'&skin=18&sign=175622'
+    querys = 'code='+code+'&phone='+phone+'&skin=18&sign=175622'
     url = host + path + '?' + querys
 
     request = urllib.request.Request(url)

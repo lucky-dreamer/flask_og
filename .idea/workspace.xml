@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -36,10 +36,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\flask_og\sb" />
+      <recent name="G:\flask_og\app" />
       <recent name="G:\flask_og\app\static\js" />
       <recent name="G:\flask_og\app\templates" />
       <recent name="G:\flask_og\app\templates\auth" />
-      <recent name="G:\flask_og\app\auth" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\flask_og\app\static\upfile" />
@@ -49,8 +50,8 @@
       <recent name="G:\flask_og\venv\Lib\site-packages\flask_bootstrap\templates" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.flasky">
-    <configuration name="flasky" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.l (1)">
+    <configuration name="22 (1)" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="flask_og" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -58,11 +59,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/flasky.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/22.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -71,7 +72,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="views (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="22" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="flask_og" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -83,7 +84,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/main/views.py" />
+      <option name="SCRIPT_NAME" value="G:\flask_og\app\22.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -92,7 +93,49 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="l (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask_og" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sb" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sb/l.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="l" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask_og" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="G:\flask_og\sb\l.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="message" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="flask_og" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -104,7 +147,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/auth/views.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/auth/message.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="models" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask_og" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/models.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -115,9 +179,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.flasky" />
-        <item itemvalue="Python.views (1)" />
-        <item itemvalue="Python.views" />
+        <item itemvalue="Python.l (1)" />
+        <item itemvalue="Python.models" />
+        <item itemvalue="Python.l" />
+        <item itemvalue="Python.22" />
+        <item itemvalue="Python.message" />
       </list>
     </recent_temporary>
   </component>
@@ -148,58 +214,54 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="275" y="22" key="#Inspections" timestamp="1585063519909">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="275" y="22" key="#Inspections/0.0.1366.728@0.0.1366.728" timestamp="1585063519909" />
     <state x="275" y="22" key="#Notifications" timestamp="1586781471119">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="22" key="#Notifications/0.0.1366.728@0.0.1366.728" timestamp="1586781471119" />
-    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586445370572">
+    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594714405237">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1586445370572" />
+    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1594714405237" />
     <state x="92" y="92" width="1182" height="544" key="DiffContextDialog" timestamp="1587713121909">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1587713121909" />
-    <state x="604" y="204" key="FileChooserDialogImpl" timestamp="1590844746888">
+    <state x="604" y="204" key="FileChooserDialogImpl" timestamp="1594692111159">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="604" y="204" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1590844746888" />
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1587647221369">
+    <state x="604" y="204" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1594692111159" />
+    <state width="1345" height="298" key="GridCell.Tab.0.bottom" timestamp="1594718578229">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1587647221369" />
-    <state width="1345" height="179" key="GridCell.Tab.0.center" timestamp="1587647221369">
+    <state width="1345" height="298" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1594718578229" />
+    <state width="1345" height="298" key="GridCell.Tab.0.center" timestamp="1594718578229">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1587647221369" />
-    <state width="1345" height="179" key="GridCell.Tab.0.left" timestamp="1587647221368">
+    <state width="1345" height="298" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1594718578229" />
+    <state width="1345" height="298" key="GridCell.Tab.0.left" timestamp="1594718578228">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1587647221368" />
-    <state width="1345" height="179" key="GridCell.Tab.0.right" timestamp="1587647221369">
+    <state width="1345" height="298" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1594718578228" />
+    <state width="1345" height="298" key="GridCell.Tab.0.right" timestamp="1594718578229">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1587647221369" />
-    <state width="1345" height="223" key="GridCell.Tab.1.bottom" timestamp="1587435438288">
+    <state width="1345" height="298" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1594718578229" />
+    <state width="1345" height="223" key="GridCell.Tab.1.bottom" timestamp="1594714712797">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="223" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1587435438288" />
-    <state width="1345" height="223" key="GridCell.Tab.1.center" timestamp="1587435438288">
+    <state width="1345" height="223" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1594714712797" />
+    <state width="1345" height="223" key="GridCell.Tab.1.center" timestamp="1594714712797">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="223" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1587435438288" />
-    <state width="1345" height="223" key="GridCell.Tab.1.left" timestamp="1587435438288">
+    <state width="1345" height="223" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1594714712797" />
+    <state width="1345" height="223" key="GridCell.Tab.1.left" timestamp="1594714712797">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="223" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1587435438288" />
-    <state width="1345" height="223" key="GridCell.Tab.1.right" timestamp="1587435438288">
+    <state width="1345" height="223" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1594714712797" />
+    <state width="1345" height="223" key="GridCell.Tab.1.right" timestamp="1594714712797">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1587435438288" />
+    <state width="1345" height="223" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1594714712797" />
     <state x="184" y="6" key="SettingsEditor" timestamp="1588844712398">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -212,25 +274,25 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="543" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1590397194830" />
-    <state x="363" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1591167217832">
+    <state x="363" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1594714372854">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="363" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1591167217832" />
+    <state x="363" y="188" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1594714372854" />
     <state x="475" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1590150582594">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="475" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1590150582594" />
-    <state x="359" y="0" width="708" height="728" key="find.popup" timestamp="1590307083410">
+    <state x="359" y="0" width="708" height="728" key="find.popup" timestamp="1594692104822">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="359" y="0" width="708" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1590307083410" />
+    <state x="359" y="0" width="708" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1594692104822" />
     <state x="359" y="210" width="716" height="307" key="org.intellij.images.editor.actions.BackgroundImageDialog" timestamp="1586657341564">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="359" y="210" width="716" height="307" key="org.intellij.images.editor.actions.BackgroundImageDialog/0.0.1366.728@0.0.1366.728" timestamp="1586657341564" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1590379738852">
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1594727448650">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1590379738852" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1594727448650" />
   </component>
 </project>

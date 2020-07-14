@@ -125,7 +125,7 @@ def forget_password():         # 忘记密码可以凭借学号，通过查询�
             user=Teacher.query.filter_by(id=session.get('id')).first()
             if user is not None:
                 phone=user.phone
-                p = check_number(session.get('code'), phone)
+                p = check_number(str(session.get('code')), phone)
                 flash(p)
             else:
                 flash('您输入的账号有误')
