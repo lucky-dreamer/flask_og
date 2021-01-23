@@ -21,7 +21,6 @@ class Config:                       # 基类配置
     CKEDITOR_ENABLE_CSRF=True
 
 
-
 class DevelopmentConfig(Config):       # 继承基类配置的内容，并根据具体的生产环境进行不同的配置
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('database')

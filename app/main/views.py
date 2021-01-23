@@ -2,10 +2,9 @@ from flask import render_template,session,flash,redirect,url_for,request,send_fr
 from datetime import datetime
 from .import main
 from .forms import generate_introduce_Form, Inform, FileForm, GradePowerForm, SignNumberForm, StudentNumberForm, AskForm, ReplyForm
-import pymysql
 from ..email import send_email
 from flask_login import login_required
-from ..models import check_file,math_timel,connection
+from ..models import check_file,connection,clock
 from flask_login import current_user
 from ..models import Informs,Question,Student,Reply,Teacher,Sign,Files,Course
 import os
@@ -62,9 +61,7 @@ def introduces(id):
     return render_template('introduce.html',introduction=introduction)
 
 
- # 它本身是个可接受参数的装饰器
-
-@main.route('/after_choice/<id>')
+@main.route('/after_choice/<id>')  # 它本身是个可接受参数的装饰器
 @connection
 @login_required
 def after_choice(cursor,id):     # 学生选择完之后进行相应的操作
@@ -275,7 +272,7 @@ def teacher_choice(cursor):  # 重点！把localhost改成127.以后，速度快
     sql1 = 'select count(teacher_id) from tb_teacher,tb_student where' \
            ' tb_student.teacher_id=tb_teacher.id and tb_teacher.id={}'.format(current_user.id)
     cursor.execute(sql1)
-    selected=cursor.fetchone()[0]  # 直接用current_user.students.count()不知道为啥会报错，所以这里用pymysql
+    selected = cursor.fetchone()[0]  # 直接用current_user.students.count()不知道为啥会报错，所以这里用pymysql
     cursor.close()
     return render_template('teacher_choice.html',selected=selected)
 
@@ -284,7 +281,7 @@ def teacher_choice(cursor):  # 重点！把localhost改成127.以后，速度快
 @main.route('/teacher/deletes/<id>', methods=['GET', 'POST'])  # 进行选择的操作
 @connection
 @login_required
-def deletes(cursor,id):   # 传回学生id用于待会儿查询
+def deletes(cursor, id):   # 传回学生id用于待会儿查询
     p=Files.query.filter_by(student_id=id).first()
     if p is not None:
         if p.file_url is not None:
@@ -446,7 +443,7 @@ def grade_result():
     students=current_user.students  # 计算后的结果
     return render_template('grade_result.html',students=students)
 
-
+@clock
 @main.route('/teacher/sign_number',methods=['GET', 'POST'])  # 后期尝试用Celery来运行后台计时函数，实现倒计时签到
 @login_required
 def sign_number():
@@ -605,7 +602,7 @@ def upload():
     if extension not in ['jpg', 'gif', 'jpeg', 'png']:
         return upload_fail(message='只支持图片上传')
     f.save(os.path.join('G:/flask_og/app/static/paragraph_image', f.filename))
-    url=url_for('main.uploaded_files',filename=f.filename,_external=True)
+    url=url_for('main.uploaded_files', filename=f.filename,_external=True)
     return upload_success(url=url)
 
 

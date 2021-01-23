@@ -2,7 +2,7 @@ from flask_login import UserMixin  # 验证用户登陆状态的模型
 from . import login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import db
-from flask import redirect,url_for
+from flask import redirect,url_for,flash
 import config
 import os
 import uuid  # 生成随机码的库
@@ -159,7 +159,7 @@ def connect():  # 链接数据库的操作封装
     return con,cursor
 
 
-def connection(func):
+def connection(func):     # 用于链接数据库的装饰器，本身是一个高阶函数
     @functools.wraps(func)
     def inner(*args,**kwargs):  # *args表示位置参数(以(a,b,...)的形式传入的元组)，**kwargs表示关键字参数（(以a=1,b=2)形式传入的字典）
         con = pymysql.connect(host='127.0.0.1', port=3306, user='root', password=os.environ.get('ps'),
@@ -173,14 +173,23 @@ def connection(func):
     return inner  # 开头结尾都不用自己写，只用写核心执行逻辑
 
 
-
-def math_timel(func):  # 装饰器本质对被装饰的函数进行处理，返回增强功能后的函数
-    def inner(*args):
-        print('123')
-        res=func(*args)
-        print('456')
+def clock(func):
+    sc=10
+    @functools.wraps(func)
+    def inner(*args,**kwargs):
+        res=func(*args,**kwargs)
+        time.sleep(sc)
+        print(sc)
         return res
     return inner
+
+# def math_timel(func):  # 装饰器本质对被装饰的函数进行处理，返回增强功能后的函数
+#     def inner(*args):
+#         print('123')
+#         res=func(*args)
+#         print('456')
+#         return res
+#     return inner
 
 
 # class Role(db.Model):
